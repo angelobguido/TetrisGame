@@ -4,9 +4,13 @@
 ; because there is no negative number, all pivot position will start at (4,4)
 ; the larger the row, the lower the pixel
 ; the rotation number order will be in clockwise
+; the game memory will hold the game pixels 
+; for every row destroyed, the values of that row will becocome 0 {need to think more}
+; the map will be 20 x 10 pixels, with colors(color 0 is empty)
 
 jmp main
 
+;colors code
 green_color : var #1
 purple_color : var #1
 red_color : var #1
@@ -20,6 +24,13 @@ static red_color, #2304
 static yellow_color, #2816
 static blue_color, #3072
 static aqua_color, #3584
+
+;game memory
+game_pixels_array_with_values : var #600 ; remember to initialise later with color 0 and the actual positions
+
+static game_pixels_array_with_values + #0, #0
+static game_pixels_array_with_values + #1, #0
+static game_pixels_array_with_values + #2, #0
 
 ; current tetromino
 current_tetromino_pixels_array : var #8 ; 2 bytes per pixel, 4 pixels per tetromino
