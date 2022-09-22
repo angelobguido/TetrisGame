@@ -142,3 +142,6 @@ static I_rotation_3_pixels_array + #7, #6 ; 3th pixel column position
 
 ; ... Z tetromino
 ; end of Z tetromino ...
+
+main:
+    halt
