@@ -75,11 +75,11 @@
 ;   rts
 ;
 ;
-
+#define A 2
 jmp main
 
 ;colors code
-green_color : var #1
+green_color : var #A
 purple_color : var #1
 red_color : var #1
 yellow_color : var #1
