@@ -4,98 +4,79 @@
 ; because there is no negative number, all pivot position will start at (4,4)
 ; the larger the row, the lower the pixel
 ; the rotation number order will be in clockwise
-; the game memory will hold the game pixels 
+; the game memory will hold the game pixels
 ; for every row destroyed, the values of that row will becocome 0 {need to think more}
 ; the map will be 20 x 10 pixels, with colors(color 0 is empty)
-
 ;---Tetris---;
 ;
 ;main:
 ;
-;   Set parameters...
+; Set parameters...
 ;
-;   InitialScreen:
-;       Call PrintInitialScreen
-;       Call GetStart  --> This function will loop until start button is pressed
-;   GameLoop:
-;       Call UpdateGame --> This function will select the new tetromino if is needed, or just move the tetromino
-;       Call PrintGameState
-;       cmp Exit
-;       jne GameLoop
-;   jmp InitialScreen
-;   halt
+; InitialScreen:
+; Call PrintInitialScreen
+; Call GetStart --> This function will loop until start button is pressed
+; GameLoop:
+; Call UpdateGame --> This function will select the new tetromino if is needed, or just move the tetromino
+; Call PrintGameState
+; cmp Exit
+; jne GameLoop
+; jmp InitialScreen
+; halt
 ;
 ;PrintInitialScreen:
-;   Do some magic... --> Remember to print current tetromino in map, only if not in ChooseNewTetrominoState
-;   rts
+; Do some magic... --> Remember to print current tetromino in map, only if not in ChooseNewTetrominoState
+; rts
 ;
 ;GetStart:
-;   GetStart_GetButton:
-;       inchar...
-;       cmp CurrentChar StartButton
-;       jne GetStart_GetButton
-;   rts
+; GetStart_GetButton:
+; inchar...
+; cmp CurrentChar StartButton
+; jne GetStart_GetButton
+; rts
 ;
 ;UpdateGame:
-;   cmp CurrentState ChooseNewTetrominoState --> Will verify if a new tetronimo need to be chosen
-;   ceq UpdateGame_ChooseNewTetromino
-;   
-;   save current tetromino position and rotation
-;   see input control (Rotation or go to sides) and save new position
-;   
-;   this block can be a function later
-;   {
-;   verify collisions with walls
-;   cmp CollisionState CollidedWithWalls
-;   jeq UpdateGame_InvalidMovement --> This will return the position to the old one
+; cmp CurrentState ChooseNewTetrominoState --> Will verify if a new tetronimo need to be chosen
+; ceq UpdateGame_ChooseNewTetromino
 ;
-;   verify collisions with pixel map
-;   cmp CollisionState CollidedWithPixelMap
-;   jep UpdateGame_InvalidMovement
-;   }
+; save current tetromino position and rotation
+; see input control (Rotation or go to sides) and save new position
 ;
-;   UpdateGame_InvalidMovement:
-;       jne UpdateGame_InvalidMovement_End --> If none of the invalid collisions happend, go to move tetromino 
-;       return the position to the old one
-;   UpdateGame_InvalidMovement_End:
-;   
-;   move tetromino down --> will move the next position down
-;   
-;   verify collisions with border  
-;   cmp CollisionState CollidedWithBorder
-;   jeq UpdateGame_FixTetromino
+; this block can be a function later
+; {
+; verify collisions with walls
+; cmp CollisionState CollidedWithWalls
+; jeq UpdateGame_InvalidMovement --> This will return the position to the old one
 ;
-;   UpdateGame_FixTetromino:
-;       jne UpdateGame_FixTetromino_End
-;       return the position to the old one
-;       update pixel map with new tetromino
-;       change state to ChooseNewTetrominoState
-;   UpdateGame_FixTetromino_End:
+; verify collisions with pixel map
+; cmp CollisionState CollidedWithPixelMap
+; jep UpdateGame_InvalidMovement
+; }
 ;
-;   rts
+; UpdateGame_InvalidMovement:
+; jne UpdateGame_InvalidMovement_End --> If none of the invalid collisions happend, go to move tetromino
+; return the position to the old one
+; UpdateGame_InvalidMovement_End:
+;
+; move tetromino down --> will move the next position down
+;
+; verify collisions with border
+; cmp CollisionState CollidedWithBorder
+; jeq UpdateGame_FixTetromino
+;
+; UpdateGame_FixTetromino:
+; jne UpdateGame_FixTetromino_End
+; return the position to the old one
+; update pixel map with new tetromino
+; change state to ChooseNewTetrominoState
+; UpdateGame_FixTetromino_End:
+;
+; rts
 ;
 ;
-#define A 2
 jmp main
-
-;colors code
-green_color : var #A
-purple_color : var #1
-red_color : var #1
-yellow_color : var #1
-blue_color : var #1
-aqua_color : var #1
-
-static green_color, #512
-static purple_color, #1280
-static red_color, #2304
-static yellow_color, #2816
-static blue_color, #3072
-static aqua_color, #3584
-
 ;game memory
 game_pixels_array_with_values : var #200 ; remember to initialise later with color 0 and the actual positions
-
 static game_pixels_array_with_values + #0, #0
 static game_pixels_array_with_values + #1, #0
 static game_pixels_array_with_values + #2, #0
@@ -296,189 +277,125 @@ static game_pixels_array_with_values + #196, #0
 static game_pixels_array_with_values + #197, #0
 static game_pixels_array_with_values + #198, #0
 static game_pixels_array_with_values + #199, #0
-
 ; current tetromino
 current_tetromino_pixels_array : var #8 ; 2 bytes per pixel, 4 pixels per tetromino
 current_tetromino_color : var #1 ; this will be the color for all pixels in one tetromino
-
 ; next tetromino
 next_tetromino_pixels_array : var #8
 next_tetromino_color : var #1
-
-
 ; ... I tetromino
-
 ; rotation 0
 ; #$##
-
 I_rotation_0_pixels_array : var #8
-
 static I_rotation_0_pixels_array + #0, #4 ; pivot pixel row position
 static I_rotation_0_pixels_array + #1, #4 ; pivot pixel column position
-
 static I_rotation_0_pixels_array + #2, #4 ; 1st pixel row position
 static I_rotation_0_pixels_array + #3, #3 ; 1st pixel column position
-
 static I_rotation_0_pixels_array + #4, #4 ; 2nd pixel row position
 static I_rotation_0_pixels_array + #5, #5 ; 2nd pixel column position
-
 static I_rotation_0_pixels_array + #6, #4 ; 3th pixel row position
 static I_rotation_0_pixels_array + #7, #6 ; 3th pixel column position
-
-; rotation 1 
+; rotation 1
 ; #
 ; $
 ; #
-; # 
-
+; #
 I_rotation_1_pixels_array : var #8
-
 static I_rotation_1_pixels_array + #0, #4 ; pivot pixel row position
 static I_rotation_1_pixels_array + #1, #4 ; pivot pixel column position
-
 static I_rotation_1_pixels_array + #2, #3 ; 1st pixel row position
 static I_rotation_1_pixels_array + #3, #4 ; 1st pixel column position
-
 static I_rotation_1_pixels_array + #4, #5 ; 2nd pixel row position
 static I_rotation_1_pixels_array + #5, #4 ; 2nd pixel column position
-
 static I_rotation_1_pixels_array + #6, #6 ; 3th pixel row position
 static I_rotation_1_pixels_array + #7, #4 ; 3th pixel column position
-
 ; rotation 2
 ; ##$#
-
 I_rotation_2_pixels_array : var #8
-
 static I_rotation_2_pixels_array + #0, #4 ; pivot pixel row position
 static I_rotation_2_pixels_array + #1, #4 ; pivot pixel column position
-
 static I_rotation_2_pixels_array + #2, #4 ; 1st pixel row position
 static I_rotation_2_pixels_array + #3, #3 ; 1st pixel column position
-
 static I_rotation_2_pixels_array + #4, #4 ; 2nd pixel row position
 static I_rotation_2_pixels_array + #5, #5 ; 2nd pixel column position
-
 static I_rotation_2_pixels_array + #6, #4 ; 3th pixel row position
 static I_rotation_2_pixels_array + #7, #2 ; 3th pixel column position
-
 ; rotation 3
 ; #
 ; #
 ; $
 ; #
-
 I_rotation_3_pixels_array : var #8
-
 static I_rotation_3_pixels_array + #0, #4 ; pivot pixel row position
 static I_rotation_3_pixels_array + #1, #4 ; pivot pixel column position
-
 static I_rotation_3_pixels_array + #2, #3 ; 1st pixel row position
 static I_rotation_3_pixels_array + #3, #4 ; 1st pixel column position
-
 static I_rotation_3_pixels_array + #4, #2 ; 2nd pixel row position
 static I_rotation_3_pixels_array + #5, #4 ; 2nd pixel column position
-
 static I_rotation_3_pixels_array + #6, #5 ; 3th pixel row position
 static I_rotation_3_pixels_array + #7, #4 ; 3th pixel column position
-
 ; end of I tetromino ...
-
-
 ; ... J tetromino
-
 ; rotation 0
 ; #
 ; $
 ;##
 J_rotation_0_pixels_array : var #8
-
 static J_rotation_0_pixels_array + #0, #4 ; pivot pixel row position
 static J_rotation_0_pixels_array + #1, #4 ; pivot pixel column position
-
 static J_rotation_0_pixels_array + #2, #3 ; 1st pixel row position
 static J_rotation_0_pixels_array + #3, #4 ; 1st pixel column position
-
 static J_rotation_0_pixels_array + #4, #5 ; 2nd pixel row position
 static J_rotation_0_pixels_array + #5, #4 ; 2nd pixel column position
-
 static J_rotation_0_pixels_array + #6, #5 ; 3th pixel row position
 static J_rotation_0_pixels_array + #7, #3 ; 3th pixel column position
-
 ; rotation 1
 ; #
 ; #$#
 J_rotation_1_pixels_array : var #8
-
 static J_rotation_1_pixels_array + #0, #4 ; pivot pixel row position
 static J_rotation_1_pixels_array + #1, #4 ; pivot pixel column position
-
 static J_rotation_1_pixels_array + #2, #4 ; 1st pixel row position
 static J_rotation_1_pixels_array + #3, #5 ; 1st pixel column position
-
 static J_rotation_1_pixels_array + #4, #4 ; 2nd pixel row position
 static J_rotation_1_pixels_array + #5, #3 ; 2nd pixel column position
-
 static J_rotation_1_pixels_array + #6, #3 ; 3th pixel row position
 static J_rotation_1_pixels_array + #7, #3 ; 3th pixel column position
-
 ; rotation 2
 ; ##
 ; $
 ; #
 J_rotation_2_pixels_array : var #8
-
 static J_rotation_2_pixels_array + #0, #4 ; pivot pixel row position
 static J_rotation_2_pixels_array + #1, #4 ; pivot pixel column position
-
 static J_rotation_2_pixels_array + #2, #5 ; 1st pixel row position
 static J_rotation_2_pixels_array + #3, #4 ; 1st pixel column position
-
 static J_rotation_2_pixels_array + #4, #3 ; 2nd pixel row position
 static J_rotation_2_pixels_array + #5, #4 ; 2nd pixel column position
-
 static J_rotation_2_pixels_array + #6, #3 ; 3th pixel row position
 static J_rotation_2_pixels_array + #7, #5 ; 3th pixel column position
-
 ; rotation 3
 ; #$#
-;   #
+; #
 J_rotation_3_pixels_array : var #8
-
 static J_rotation_3_pixels_array + #0, #4 ; pivot pixel row position
 static J_rotation_3_pixels_array + #1, #4 ; pivot pixel column position
-
 static J_rotation_3_pixels_array + #2, #4 ; 1st pixel row position
 static J_rotation_3_pixels_array + #3, #3 ; 1st pixel column position
-
 static J_rotation_3_pixels_array + #4, #4 ; 2nd pixel row position
 static J_rotation_3_pixels_array + #5, #5 ; 2nd pixel column position
-
 static J_rotation_3_pixels_array + #6, #5 ; 3th pixel row position
 static J_rotation_3_pixels_array + #7, #5 ; 3th pixel column position
-
-
 ; end of J tetromino ...
-
-
 ; ... L tetromino
 ; end of L tetromino ...
-
-
 ; ... O tetromino
 ; end of O tetromino ...
-
-
 ; ... S tetromino
 ; end of S tetromino ...
-
-
 ; ... T tetromino
 ; end of T tetromino ...
-
-
 ; ... Z tetromino
 ; end of Z tetromino ...
-
 main:
     halt

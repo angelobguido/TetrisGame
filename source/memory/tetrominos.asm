@@ -1,0 +1,7 @@
+#include "./tetrominos/I_tetromino.asm"
+#include "./tetrominos/J_tetromino.asm"
+#include "./tetrominos/L_tetromino.asm"
+#include "./tetrominos/O_tetromino.asm"
+#include "./tetrominos/S_tetromino.asm"
+#include "./tetrominos/T_tetromino.asm"
+#include "./tetrominos/Z_tetromino.asm"
