@@ -7,6 +7,7 @@
 ; the game memory will hold the game pixels 
 ; for every row destroyed, the values of that row will becocome 0 {need to think more}
 ; the map will be 20 x 10 pixels, with colors(color 0 is empty)
+; some functions may use the last 3 registers as input and output, so keep in mind
 
 ;---Tetris---;
 ;

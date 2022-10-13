@@ -1,0 +1,1 @@
+;this function receives from R7(number) the number in the game map array and output at R5(row) and R6(collumn)

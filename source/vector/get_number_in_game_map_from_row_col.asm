@@ -1,0 +1,1 @@
+;this function receives from R5(row) R6(col) and output the draw number at R7(number)

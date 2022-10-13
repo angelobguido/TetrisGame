@@ -1,403 +1,3 @@
-; all tetrominos have 4 pixels
-; the position will always be in (row, column) order
-; every pixel will store a position(2 bytes)
-; because there is no negative number, all pivot position will start at (4,4)
-; the larger the row, the lower the pixel
-; the rotation number order will be in clockwise
-; the game memory will hold the game pixels
-; for every row destroyed, the values of that row will becocome 0 {need to think more}
-; the map will be 20 x 10 pixels, with colors(color 0 is empty)
-; some functions may use the last 3 registers as input and output, so keep in mind
-;---Tetris---;
-;
-;main:
-;
-; Set parameters...
-;
-; InitialScreen:
-; Call PrintInitialScreen
-; Call GetStart --> This function will loop until start button is pressed
-; GameLoop:
-; Call UpdateGame --> This function will select the new tetromino if is needed, or just move the tetromino
-; Call PrintGameState
-; cmp Exit
-; jne GameLoop
-; jmp InitialScreen
-; halt
-;
-;PrintInitialScreen:
-; Do some magic... --> Remember to print current tetromino in map, only if not in ChooseNewTetrominoState
-; rts
-;
-;GetStart:
-; GetStart_GetButton:
-; inchar...
-; cmp CurrentChar StartButton
-; jne GetStart_GetButton
-; rts
-;
-;UpdateGame:
-; cmp CurrentState ChooseNewTetrominoState --> Will verify if a new tetronimo need to be chosen
-; ceq UpdateGame_ChooseNewTetromino
-;
-; save current tetromino position and rotation
-; see input control (Rotation or go to sides) and save new position
-;
-; this block can be a function later
-; {
-; verify collisions with walls
-; cmp CollisionState CollidedWithWalls
-; jeq UpdateGame_InvalidMovement --> This will return the position to the old one
-;
-; verify collisions with pixel map
-; cmp CollisionState CollidedWithPixelMap
-; jep UpdateGame_InvalidMovement
-; }
-;
-; UpdateGame_InvalidMovement:
-; jne UpdateGame_InvalidMovement_End --> If none of the invalid collisions happend, go to move tetromino
-; return the position to the old one
-; UpdateGame_InvalidMovement_End:
-;
-; move tetromino down --> will move the next position down
-;
-; verify collisions with border
-; cmp CollisionState CollidedWithBorder
-; jeq UpdateGame_FixTetromino
-;
-; UpdateGame_FixTetromino:
-; jne UpdateGame_FixTetromino_End
-; return the position to the old one
-; update pixel map with new tetromino
-; change state to ChooseNewTetrominoState
-; UpdateGame_FixTetromino_End:
-;
-; rts
-;
-;
-jmp main
-;game memory
-game_pixels_array_with_values : var #200 ; remember to initialise later with color 0 and the actual positions
-static game_pixels_array_with_values + #0, #0
-static game_pixels_array_with_values + #1, #0
-static game_pixels_array_with_values + #2, #0
-static game_pixels_array_with_values + #3, #0
-static game_pixels_array_with_values + #4, #0
-static game_pixels_array_with_values + #5, #0
-static game_pixels_array_with_values + #6, #0
-static game_pixels_array_with_values + #7, #0
-static game_pixels_array_with_values + #8, #0
-static game_pixels_array_with_values + #9, #0
-static game_pixels_array_with_values + #10, #0
-static game_pixels_array_with_values + #11, #0
-static game_pixels_array_with_values + #12, #0
-static game_pixels_array_with_values + #13, #0
-static game_pixels_array_with_values + #14, #0
-static game_pixels_array_with_values + #15, #0
-static game_pixels_array_with_values + #16, #0
-static game_pixels_array_with_values + #17, #0
-static game_pixels_array_with_values + #18, #0
-static game_pixels_array_with_values + #19, #0
-static game_pixels_array_with_values + #20, #0
-static game_pixels_array_with_values + #21, #0
-static game_pixels_array_with_values + #22, #0
-static game_pixels_array_with_values + #23, #0
-static game_pixels_array_with_values + #24, #0
-static game_pixels_array_with_values + #25, #0
-static game_pixels_array_with_values + #26, #0
-static game_pixels_array_with_values + #27, #0
-static game_pixels_array_with_values + #28, #0
-static game_pixels_array_with_values + #29, #0
-static game_pixels_array_with_values + #30, #0
-static game_pixels_array_with_values + #31, #0
-static game_pixels_array_with_values + #32, #0
-static game_pixels_array_with_values + #33, #0
-static game_pixels_array_with_values + #34, #0
-static game_pixels_array_with_values + #35, #0
-static game_pixels_array_with_values + #36, #0
-static game_pixels_array_with_values + #37, #0
-static game_pixels_array_with_values + #38, #0
-static game_pixels_array_with_values + #39, #0
-static game_pixels_array_with_values + #40, #0
-static game_pixels_array_with_values + #41, #0
-static game_pixels_array_with_values + #42, #0
-static game_pixels_array_with_values + #43, #0
-static game_pixels_array_with_values + #44, #0
-static game_pixels_array_with_values + #45, #0
-static game_pixels_array_with_values + #46, #0
-static game_pixels_array_with_values + #47, #0
-static game_pixels_array_with_values + #48, #0
-static game_pixels_array_with_values + #49, #0
-static game_pixels_array_with_values + #50, #0
-static game_pixels_array_with_values + #51, #0
-static game_pixels_array_with_values + #52, #0
-static game_pixels_array_with_values + #53, #0
-static game_pixels_array_with_values + #54, #0
-static game_pixels_array_with_values + #55, #0
-static game_pixels_array_with_values + #56, #0
-static game_pixels_array_with_values + #57, #0
-static game_pixels_array_with_values + #58, #0
-static game_pixels_array_with_values + #59, #0
-static game_pixels_array_with_values + #60, #0
-static game_pixels_array_with_values + #61, #0
-static game_pixels_array_with_values + #62, #0
-static game_pixels_array_with_values + #63, #0
-static game_pixels_array_with_values + #64, #0
-static game_pixels_array_with_values + #65, #0
-static game_pixels_array_with_values + #66, #0
-static game_pixels_array_with_values + #67, #0
-static game_pixels_array_with_values + #68, #0
-static game_pixels_array_with_values + #69, #0
-static game_pixels_array_with_values + #70, #0
-static game_pixels_array_with_values + #71, #0
-static game_pixels_array_with_values + #72, #0
-static game_pixels_array_with_values + #73, #0
-static game_pixels_array_with_values + #74, #0
-static game_pixels_array_with_values + #75, #0
-static game_pixels_array_with_values + #76, #0
-static game_pixels_array_with_values + #77, #0
-static game_pixels_array_with_values + #78, #0
-static game_pixels_array_with_values + #79, #0
-static game_pixels_array_with_values + #80, #0
-static game_pixels_array_with_values + #81, #0
-static game_pixels_array_with_values + #82, #0
-static game_pixels_array_with_values + #83, #0
-static game_pixels_array_with_values + #84, #0
-static game_pixels_array_with_values + #85, #0
-static game_pixels_array_with_values + #86, #0
-static game_pixels_array_with_values + #87, #0
-static game_pixels_array_with_values + #88, #0
-static game_pixels_array_with_values + #89, #0
-static game_pixels_array_with_values + #90, #0
-static game_pixels_array_with_values + #91, #0
-static game_pixels_array_with_values + #92, #0
-static game_pixels_array_with_values + #93, #0
-static game_pixels_array_with_values + #94, #0
-static game_pixels_array_with_values + #95, #0
-static game_pixels_array_with_values + #96, #0
-static game_pixels_array_with_values + #97, #0
-static game_pixels_array_with_values + #98, #0
-static game_pixels_array_with_values + #99, #0
-static game_pixels_array_with_values + #100, #0
-static game_pixels_array_with_values + #101, #0
-static game_pixels_array_with_values + #102, #0
-static game_pixels_array_with_values + #103, #0
-static game_pixels_array_with_values + #104, #0
-static game_pixels_array_with_values + #105, #0
-static game_pixels_array_with_values + #106, #0
-static game_pixels_array_with_values + #107, #0
-static game_pixels_array_with_values + #108, #0
-static game_pixels_array_with_values + #109, #0
-static game_pixels_array_with_values + #110, #0
-static game_pixels_array_with_values + #111, #0
-static game_pixels_array_with_values + #112, #0
-static game_pixels_array_with_values + #113, #0
-static game_pixels_array_with_values + #114, #0
-static game_pixels_array_with_values + #115, #0
-static game_pixels_array_with_values + #116, #0
-static game_pixels_array_with_values + #117, #0
-static game_pixels_array_with_values + #118, #0
-static game_pixels_array_with_values + #119, #0
-static game_pixels_array_with_values + #120, #0
-static game_pixels_array_with_values + #121, #0
-static game_pixels_array_with_values + #122, #0
-static game_pixels_array_with_values + #123, #0
-static game_pixels_array_with_values + #124, #0
-static game_pixels_array_with_values + #125, #0
-static game_pixels_array_with_values + #126, #0
-static game_pixels_array_with_values + #127, #0
-static game_pixels_array_with_values + #128, #0
-static game_pixels_array_with_values + #129, #0
-static game_pixels_array_with_values + #130, #0
-static game_pixels_array_with_values + #131, #0
-static game_pixels_array_with_values + #132, #0
-static game_pixels_array_with_values + #133, #0
-static game_pixels_array_with_values + #134, #0
-static game_pixels_array_with_values + #135, #0
-static game_pixels_array_with_values + #136, #0
-static game_pixels_array_with_values + #137, #0
-static game_pixels_array_with_values + #138, #0
-static game_pixels_array_with_values + #139, #0
-static game_pixels_array_with_values + #140, #0
-static game_pixels_array_with_values + #141, #0
-static game_pixels_array_with_values + #142, #0
-static game_pixels_array_with_values + #143, #0
-static game_pixels_array_with_values + #144, #0
-static game_pixels_array_with_values + #145, #0
-static game_pixels_array_with_values + #146, #0
-static game_pixels_array_with_values + #147, #0
-static game_pixels_array_with_values + #148, #0
-static game_pixels_array_with_values + #149, #0
-static game_pixels_array_with_values + #150, #0
-static game_pixels_array_with_values + #151, #0
-static game_pixels_array_with_values + #152, #0
-static game_pixels_array_with_values + #153, #0
-static game_pixels_array_with_values + #154, #0
-static game_pixels_array_with_values + #155, #0
-static game_pixels_array_with_values + #156, #0
-static game_pixels_array_with_values + #157, #0
-static game_pixels_array_with_values + #158, #0
-static game_pixels_array_with_values + #159, #0
-static game_pixels_array_with_values + #160, #0
-static game_pixels_array_with_values + #161, #0
-static game_pixels_array_with_values + #162, #0
-static game_pixels_array_with_values + #163, #0
-static game_pixels_array_with_values + #164, #0
-static game_pixels_array_with_values + #165, #0
-static game_pixels_array_with_values + #166, #0
-static game_pixels_array_with_values + #167, #0
-static game_pixels_array_with_values + #168, #0
-static game_pixels_array_with_values + #169, #0
-static game_pixels_array_with_values + #170, #0
-static game_pixels_array_with_values + #171, #0
-static game_pixels_array_with_values + #172, #0
-static game_pixels_array_with_values + #173, #0
-static game_pixels_array_with_values + #174, #0
-static game_pixels_array_with_values + #175, #0
-static game_pixels_array_with_values + #176, #0
-static game_pixels_array_with_values + #177, #0
-static game_pixels_array_with_values + #178, #0
-static game_pixels_array_with_values + #179, #0
-static game_pixels_array_with_values + #180, #0
-static game_pixels_array_with_values + #181, #0
-static game_pixels_array_with_values + #182, #0
-static game_pixels_array_with_values + #183, #0
-static game_pixels_array_with_values + #184, #0
-static game_pixels_array_with_values + #185, #0
-static game_pixels_array_with_values + #186, #0
-static game_pixels_array_with_values + #187, #0
-static game_pixels_array_with_values + #188, #0
-static game_pixels_array_with_values + #189, #0
-static game_pixels_array_with_values + #190, #0
-static game_pixels_array_with_values + #191, #0
-static game_pixels_array_with_values + #192, #0
-static game_pixels_array_with_values + #193, #0
-static game_pixels_array_with_values + #194, #0
-static game_pixels_array_with_values + #195, #0
-static game_pixels_array_with_values + #196, #0
-static game_pixels_array_with_values + #197, #0
-static game_pixels_array_with_values + #198, #0
-static game_pixels_array_with_values + #199, #0
-; current tetromino
-current_tetromino_pixels_array : var #8 ; 2 bytes per pixel, 4 pixels per tetromino
-current_tetromino_color : var #1 ; this will be the color for all pixels in one tetromino
-; next tetromino
-next_tetromino_pixels_array : var #8
-next_tetromino_color : var #1
-; ... I tetromino
-; rotation 0
-; #$##
-I_rotation_0_pixels_array : var #8
-static I_rotation_0_pixels_array + #0, #4 ; pivot pixel row position
-static I_rotation_0_pixels_array + #1, #4 ; pivot pixel column position
-static I_rotation_0_pixels_array + #2, #4 ; 1st pixel row position
-static I_rotation_0_pixels_array + #3, #3 ; 1st pixel column position
-static I_rotation_0_pixels_array + #4, #4 ; 2nd pixel row position
-static I_rotation_0_pixels_array + #5, #5 ; 2nd pixel column position
-static I_rotation_0_pixels_array + #6, #4 ; 3th pixel row position
-static I_rotation_0_pixels_array + #7, #6 ; 3th pixel column position
-; rotation 1
-; #
-; $
-; #
-; #
-I_rotation_1_pixels_array : var #8
-static I_rotation_1_pixels_array + #0, #4 ; pivot pixel row position
-static I_rotation_1_pixels_array + #1, #4 ; pivot pixel column position
-static I_rotation_1_pixels_array + #2, #3 ; 1st pixel row position
-static I_rotation_1_pixels_array + #3, #4 ; 1st pixel column position
-static I_rotation_1_pixels_array + #4, #5 ; 2nd pixel row position
-static I_rotation_1_pixels_array + #5, #4 ; 2nd pixel column position
-static I_rotation_1_pixels_array + #6, #6 ; 3th pixel row position
-static I_rotation_1_pixels_array + #7, #4 ; 3th pixel column position
-; rotation 2
-; ##$#
-I_rotation_2_pixels_array : var #8
-static I_rotation_2_pixels_array + #0, #4 ; pivot pixel row position
-static I_rotation_2_pixels_array + #1, #4 ; pivot pixel column position
-static I_rotation_2_pixels_array + #2, #4 ; 1st pixel row position
-static I_rotation_2_pixels_array + #3, #3 ; 1st pixel column position
-static I_rotation_2_pixels_array + #4, #4 ; 2nd pixel row position
-static I_rotation_2_pixels_array + #5, #5 ; 2nd pixel column position
-static I_rotation_2_pixels_array + #6, #4 ; 3th pixel row position
-static I_rotation_2_pixels_array + #7, #2 ; 3th pixel column position
-; rotation 3
-; #
-; #
-; $
-; #
-I_rotation_3_pixels_array : var #8
-static I_rotation_3_pixels_array + #0, #4 ; pivot pixel row position
-static I_rotation_3_pixels_array + #1, #4 ; pivot pixel column position
-static I_rotation_3_pixels_array + #2, #3 ; 1st pixel row position
-static I_rotation_3_pixels_array + #3, #4 ; 1st pixel column position
-static I_rotation_3_pixels_array + #4, #2 ; 2nd pixel row position
-static I_rotation_3_pixels_array + #5, #4 ; 2nd pixel column position
-static I_rotation_3_pixels_array + #6, #5 ; 3th pixel row position
-static I_rotation_3_pixels_array + #7, #4 ; 3th pixel column position
-; end of I tetromino ...
-; ... J tetromino
-; rotation 0
-; #
-; $
-;##
-J_rotation_0_pixels_array : var #8
-static J_rotation_0_pixels_array + #0, #4 ; pivot pixel row position
-static J_rotation_0_pixels_array + #1, #4 ; pivot pixel column position
-static J_rotation_0_pixels_array + #2, #3 ; 1st pixel row position
-static J_rotation_0_pixels_array + #3, #4 ; 1st pixel column position
-static J_rotation_0_pixels_array + #4, #5 ; 2nd pixel row position
-static J_rotation_0_pixels_array + #5, #4 ; 2nd pixel column position
-static J_rotation_0_pixels_array + #6, #5 ; 3th pixel row position
-static J_rotation_0_pixels_array + #7, #3 ; 3th pixel column position
-; rotation 1
-; #
-; #$#
-J_rotation_1_pixels_array : var #8
-static J_rotation_1_pixels_array + #0, #4 ; pivot pixel row position
-static J_rotation_1_pixels_array + #1, #4 ; pivot pixel column position
-static J_rotation_1_pixels_array + #2, #4 ; 1st pixel row position
-static J_rotation_1_pixels_array + #3, #5 ; 1st pixel column position
-static J_rotation_1_pixels_array + #4, #4 ; 2nd pixel row position
-static J_rotation_1_pixels_array + #5, #3 ; 2nd pixel column position
-static J_rotation_1_pixels_array + #6, #3 ; 3th pixel row position
-static J_rotation_1_pixels_array + #7, #3 ; 3th pixel column position
-; rotation 2
-; ##
-; $
-; #
-J_rotation_2_pixels_array : var #8
-static J_rotation_2_pixels_array + #0, #4 ; pivot pixel row position
-static J_rotation_2_pixels_array + #1, #4 ; pivot pixel column position
-static J_rotation_2_pixels_array + #2, #5 ; 1st pixel row position
-static J_rotation_2_pixels_array + #3, #4 ; 1st pixel column position
-static J_rotation_2_pixels_array + #4, #3 ; 2nd pixel row position
-static J_rotation_2_pixels_array + #5, #4 ; 2nd pixel column position
-static J_rotation_2_pixels_array + #6, #3 ; 3th pixel row position
-static J_rotation_2_pixels_array + #7, #5 ; 3th pixel column position
-; rotation 3
-; #$#
-; #
-J_rotation_3_pixels_array : var #8
-static J_rotation_3_pixels_array + #0, #4 ; pivot pixel row position
-static J_rotation_3_pixels_array + #1, #4 ; pivot pixel column position
-static J_rotation_3_pixels_array + #2, #4 ; 1st pixel row position
-static J_rotation_3_pixels_array + #3, #3 ; 1st pixel column position
-static J_rotation_3_pixels_array + #4, #4 ; 2nd pixel row position
-static J_rotation_3_pixels_array + #5, #5 ; 2nd pixel column position
-static J_rotation_3_pixels_array + #6, #5 ; 3th pixel row position
-static J_rotation_3_pixels_array + #7, #5 ; 3th pixel column position
-; end of J tetromino ...
-; ... L tetromino
-; end of L tetromino ...
-; ... O tetromino
-; end of O tetromino ...
-; ... S tetromino
-; end of S tetromino ...
-; ... T tetromino
-; end of T tetromino ...
-; ... Z tetromino
-; end of Z tetromino ...
 title : var #1200
   ;Linha 0
   static title + #0, #127
@@ -440,6 +40,7 @@ title : var #1200
   static title + #37, #127
   static title + #38, #127
   static title + #39, #127
+
   ;Linha 1
   static title + #40, #127
   static title + #41, #127
@@ -481,6 +82,7 @@ title : var #1200
   static title + #77, #127
   static title + #78, #127
   static title + #79, #127
+
   ;Linha 2
   static title + #80, #127
   static title + #81, #127
@@ -522,6 +124,7 @@ title : var #1200
   static title + #117, #127
   static title + #118, #127
   static title + #119, #127
+
   ;Linha 3
   static title + #120, #127
   static title + #121, #127
@@ -563,6 +166,7 @@ title : var #1200
   static title + #157, #127
   static title + #158, #127
   static title + #159, #127
+
   ;Linha 4
   static title + #160, #127
   static title + #161, #127
@@ -604,6 +208,7 @@ title : var #1200
   static title + #197, #127
   static title + #198, #127
   static title + #199, #127
+
   ;Linha 5
   static title + #200, #127
   static title + #201, #127
@@ -645,6 +250,7 @@ title : var #1200
   static title + #237, #127
   static title + #238, #127
   static title + #239, #127
+
   ;Linha 6
   static title + #240, #127
   static title + #241, #127
@@ -686,6 +292,7 @@ title : var #1200
   static title + #277, #127
   static title + #278, #127
   static title + #279, #127
+
   ;Linha 7
   static title + #280, #127
   static title + #281, #127
@@ -727,6 +334,7 @@ title : var #1200
   static title + #317, #0
   static title + #318, #0
   static title + #319, #127
+
   ;Linha 8
   static title + #320, #127
   static title + #321, #127
@@ -768,6 +376,7 @@ title : var #1200
   static title + #357, #0
   static title + #358, #127
   static title + #359, #127
+
   ;Linha 9
   static title + #360, #127
   static title + #361, #127
@@ -809,6 +418,7 @@ title : var #1200
   static title + #397, #0
   static title + #398, #127
   static title + #399, #127
+
   ;Linha 10
   static title + #400, #127
   static title + #401, #127
@@ -850,6 +460,7 @@ title : var #1200
   static title + #437, #0
   static title + #438, #127
   static title + #439, #127
+
   ;Linha 11
   static title + #440, #127
   static title + #441, #127
@@ -891,6 +502,7 @@ title : var #1200
   static title + #477, #0
   static title + #478, #0
   static title + #479, #127
+
   ;Linha 12
   static title + #480, #127
   static title + #481, #127
@@ -932,6 +544,7 @@ title : var #1200
   static title + #517, #127
   static title + #518, #0
   static title + #519, #127
+
   ;Linha 13
   static title + #520, #127
   static title + #521, #127
@@ -973,6 +586,7 @@ title : var #1200
   static title + #557, #127
   static title + #558, #0
   static title + #559, #127
+
   ;Linha 14
   static title + #560, #127
   static title + #561, #127
@@ -1014,6 +628,7 @@ title : var #1200
   static title + #597, #0
   static title + #598, #0
   static title + #599, #127
+
   ;Linha 15
   static title + #600, #127
   static title + #601, #127
@@ -1055,6 +670,7 @@ title : var #1200
   static title + #637, #0
   static title + #638, #127
   static title + #639, #127
+
   ;Linha 16
   static title + #640, #127
   static title + #641, #127
@@ -1096,6 +712,7 @@ title : var #1200
   static title + #677, #127
   static title + #678, #127
   static title + #679, #127
+
   ;Linha 17
   static title + #680, #127
   static title + #681, #127
@@ -1137,6 +754,7 @@ title : var #1200
   static title + #717, #127
   static title + #718, #127
   static title + #719, #127
+
   ;Linha 18
   static title + #720, #127
   static title + #721, #127
@@ -1178,6 +796,7 @@ title : var #1200
   static title + #757, #127
   static title + #758, #127
   static title + #759, #127
+
   ;Linha 19
   static title + #760, #127
   static title + #761, #127
@@ -1219,6 +838,7 @@ title : var #1200
   static title + #797, #127
   static title + #798, #127
   static title + #799, #127
+
   ;Linha 20
   static title + #800, #127
   static title + #801, #127
@@ -1260,6 +880,7 @@ title : var #1200
   static title + #837, #127
   static title + #838, #127
   static title + #839, #127
+
   ;Linha 21
   static title + #840, #127
   static title + #841, #127
@@ -1301,6 +922,7 @@ title : var #1200
   static title + #877, #127
   static title + #878, #127
   static title + #879, #127
+
   ;Linha 22
   static title + #880, #127
   static title + #881, #127
@@ -1342,6 +964,7 @@ title : var #1200
   static title + #917, #127
   static title + #918, #127
   static title + #919, #127
+
   ;Linha 23
   static title + #920, #127
   static title + #921, #127
@@ -1383,6 +1006,7 @@ title : var #1200
   static title + #957, #127
   static title + #958, #127
   static title + #959, #127
+
   ;Linha 24
   static title + #960, #127
   static title + #961, #127
@@ -1424,6 +1048,7 @@ title : var #1200
   static title + #997, #127
   static title + #998, #127
   static title + #999, #127
+
   ;Linha 25
   static title + #1000, #127
   static title + #1001, #127
@@ -1465,6 +1090,7 @@ title : var #1200
   static title + #1037, #127
   static title + #1038, #127
   static title + #1039, #127
+
   ;Linha 26
   static title + #1040, #127
   static title + #1041, #127
@@ -1506,6 +1132,7 @@ title : var #1200
   static title + #1077, #127
   static title + #1078, #127
   static title + #1079, #127
+
   ;Linha 27
   static title + #1080, #127
   static title + #1081, #127
@@ -1547,6 +1174,7 @@ title : var #1200
   static title + #1117, #127
   static title + #1118, #127
   static title + #1119, #127
+
   ;Linha 28
   static title + #1120, #127
   static title + #1121, #127
@@ -1588,6 +1216,7 @@ title : var #1200
   static title + #1157, #127
   static title + #1158, #127
   static title + #1159, #127
+
   ;Linha 29
   static title + #1160, #127
   static title + #1161, #127
@@ -1629,54 +1258,3 @@ title : var #1200
   static title + #1197, #127
   static title + #1198, #127
   static title + #1199, #127
-main:
-game_title:
-  push fr
-  push R0
-  push R1
-  push R2
-  push R3
-  loadn R0, #title
-  loadn R1, #0
-  loadn R2, #1200
-  game_title_loop:
-    add R3,R0,R1
-    loadi R3, R3
-    outchar R3, R1
-    inc R1
-    cmp R1, R2
-    jne game_title_loop
-  pop R3
-  pop R2
-  pop R1
-  pop R0
-  pop fr
-    loadn r0, #43
-    loadn r1, #0
-    outchar r0, r1
-    halt
-print_string: ; Rotina de Impresao de Mensagens: r0 = Posicao da tela que o primeiro caractere da mensagem sera' impresso;  r1 = endereco onde comeca a mensagem; r2 = cor da mensagem.   Obs: a mensagem sera' impressa ate' encontrar "/0"
- push fr ; Protege o registrador de flags
- push r0 ; protege o r0 na pilha para preservar seu valor
- push r1 ; protege o r1 na pilha para preservar seu valor
- push r2 ; protege o r1 na pilha para preservar seu valor
- push r3 ; protege o r3 na pilha para ser usado na subrotina
- push r4 ; protege o r4 na pilha para ser usado na subrotina
- loadn r3, #'\0' ; Criterio de parada
-   print_string_loop:
-  loadi r4, r1
-  cmp r4, r3
-  jeq print_string_exit
-  add r4, r2, r4
-  outchar r4, r0
-  inc r0
-  inc r1
-  jmp print_string_loop
-   print_string_exit:
- pop r4 ; Resgata os valores dos registradores utilizados na Subrotina da Pilha
- pop r3
- pop r2
- pop r1
- pop r0
- pop fr
- rts
