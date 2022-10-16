@@ -281,9 +281,13 @@ static game_pixels_array_with_values + #199, #0
 ; current tetromino
 current_tetromino_pixels_array : var #8 ; 2 bytes per pixel, 4 pixels per tetromino
 current_tetromino_color : var #1 ; this will be the color for all pixels in one tetromino
+current_tetromino_prefab_adress : var #1 ; this will store the current prefab with rotation 0, that the tetromino is using
+current_tetromino_rotation : var #1; this will save the current rotation
 ; next tetromino
 next_tetromino_pixels_array : var #8
 next_tetromino_color : var #1
+next_tetromino_prefab_adress : var #1
+next_tetromino_rotation : var #1
 ; ... I tetromino
 ; rotation 0
 ; #$##
@@ -1667,6 +1671,18 @@ loadn r0, #'i'
 call wait_press_key
 pop r0
     call clear_screen
+push r0
+push r1
+push r2
+push r3
+loadn r0, #0 ; '0' stands for "I tetromino"
+loadn r1, #2304
+loadn r2, #0
+loadn r3, #current_tetromino_pixels_array
+pop r3
+pop r2
+pop r1
+pop r0
     halt
 print_string: ; Rotina de Impresao de Mensagens: r0 = Posicao da tela que o primeiro caractere da mensagem sera' impresso;  r1 = endereco onde comeca a mensagem; r2 = cor da mensagem.   Obs: a mensagem sera' impressa ate' encontrar "/0"
  push fr ; Protege o registrador de flags
@@ -1739,3 +1755,56 @@ pop fr
 rts
 ;this function receives from R5(row) R6(col) and output the draw number at R7(number)
 ;this function receives from R7(number) the number in the game map array and output at R5(row) and R6(collumn)
+; This function will set the game tetromino state.
+; The arguments are r0, r1, r2, r3:
+; selecting the tetromino, the color, the rotation,
+; and the memory adress of the tetromino you want
+; to change.
+set_tetromino:
+push fr
+push r0
+push r1
+push r2
+push r3
+push r4
+push r5
+push r6
+push r7
+loadn r4, #I_rotation_0_pixels_array
+loadn r6, #32
+loadn r5, #8
+;getting the memory adress of the prefab selected and rotation
+push r2 ; saving the rotation value for later
+mult r7, r0, r6
+add r7, r4, r7
+push r7 ; saving the prefab adress with rotation zero, to store in game tetromino
+mult r2, r2, r5
+add r7, r2, r7
+set_tetromino_loop:
+storei r3, r7
+inc r3
+inc r7
+dec r5
+jz set_tetromino_exit
+jmp set_tetromino_loop
+set_tetromino_exit:
+; storing the color
+storei r3, r1
+inc r3
+; storing the prefab adress
+pop r7
+storei r3, r7
+inc r3
+; storing the rotation
+pop r2
+storei r3, r2
+pop r7
+pop r6
+pop r5
+pop r4
+pop r3
+pop r2
+pop r1
+pop r0
+pop fr
+rts

@@ -12,8 +12,11 @@ main:
 
     call clear_screen
 
+    #include "./gameengine/test_tetromino_manipulation.asm"
+
     halt
 
 #include "./draw/functions.asm"
 #include "./input/functions.asm"
 #include "./vector/functions.asm"
+#include "./gameengine/functions.asm"
