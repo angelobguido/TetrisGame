@@ -1,0 +1,1 @@
+init_game_message : string "Aperte 'i' para comecar!"

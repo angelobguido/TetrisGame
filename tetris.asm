@@ -1629,6 +1629,7 @@ title : var #1200
   static title + #1197, #127
   static title + #1198, #127
   static title + #1199, #127
+init_game_message : string "Aperte 'i' para comecar!"
 main:
 game_title:
   push fr
@@ -1651,9 +1652,21 @@ game_title:
   pop R1
   pop R0
   pop fr
-    loadn r0, #43
-    loadn r1, #0
-    outchar r0, r1
+push r0
+push r1
+push r2
+loadn r0, #1045
+loadn r1, #init_game_message
+loadn r2, #512
+call print_string
+pop r2
+pop r1
+pop r0
+push r0
+loadn r0, #'i'
+call wait_press_key
+pop r0
+    call clear_screen
     halt
 print_string: ; Rotina de Impresao de Mensagens: r0 = Posicao da tela que o primeiro caractere da mensagem sera' impresso;  r1 = endereco onde comeca a mensagem; r2 = cor da mensagem.   Obs: a mensagem sera' impressa ate' encontrar "/0"
  push fr ; Protege o registrador de flags
@@ -1680,3 +1693,49 @@ print_string: ; Rotina de Impresao de Mensagens: r0 = Posicao da tela que o prim
  pop r0
  pop fr
  rts
+;This function will put ' ' in all screen
+clear_screen:
+push fr
+push r0
+push r1
+loadn r0, #1200
+loadn r1, #' '
+clear_screen_loop:
+outchar r1, r0
+dec r0
+jz clear_screen_exit
+jmp clear_screen_loop
+clear_screen_exit:
+pop r1
+pop r0
+pop fr
+;This function will get a value from input and store the value in r0
+get_input:
+push fr
+push r1
+get_input_loop:
+inchar r0
+cmp r0, r1
+jne get_input_exit
+jmp get_input_loop
+get_input_exit:
+pop r1
+pop fr
+rts
+;This function will wait until the value in r0 is got from the keyboard
+wait_press_key:
+push fr
+push r0
+push r1
+wait_press_key_loop:
+inchar r1
+cmp r1, r0
+jeq wait_press_key_exit
+jmp wait_press_key_loop
+wait_press_key_exit:
+pop r1
+pop r0
+pop fr
+rts
+;this function receives from R5(row) R6(col) and output the draw number at R7(number)
+;this function receives from R7(number) the number in the game map array and output at R5(row) and R6(collumn)

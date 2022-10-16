@@ -7,10 +7,13 @@ jmp main
 
 main:
     #include "./draw/game_title.asm"
+    #include "./draw/messages/init_game.asm"
+    #include "./input/get_init_button.asm"
 
-    loadn r0, #43
-    loadn r1, #0
-    outchar r0, r1
+    call clear_screen
+
     halt
 
 #include "./draw/functions.asm"
+#include "./input/functions.asm"
+#include "./vector/functions.asm"

@@ -2,3 +2,4 @@
 #include "./memory/tetromino_user_memory.asm"
 #include "./memory/tetrominos.asm"
 #include "./memory/draw_memory.asm"
+#include "./memory/messages.asm"

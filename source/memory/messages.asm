@@ -1,0 +1,1 @@
+#include "./messages/init_game.asm"
