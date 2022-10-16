@@ -13,6 +13,15 @@ loadn SELECTED_COLOR, #RED
 loadn SELECTED_ROTATION, #0
 loadn GAME_TETROMINO_ADRESS, #current_tetromino_pixels_array
 
+call set_tetromino
+
+push r0
+
+mov r0, GAME_TETROMINO_ADRESS
+
+call draw_tetromino
+
+pop r0
 
 
 pop r3

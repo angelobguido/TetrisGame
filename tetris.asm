@@ -1679,6 +1679,11 @@ loadn r0, #0 ; '0' stands for "I tetromino"
 loadn r1, #2304
 loadn r2, #0
 loadn r3, #current_tetromino_pixels_array
+call set_tetromino
+push r0
+mov r0, r3
+call draw_tetromino
+pop r0
 pop r3
 pop r2
 pop r1
@@ -1709,6 +1714,58 @@ print_string: ; Rotina de Impresao de Mensagens: r0 = Posicao da tela que o prim
  pop r0
  pop fr
  rts
+; This function will draw the tetromino.
+; The argument is r0:
+; the tetromino first adress.
+draw_tetromino:
+push fr
+push r0
+push r1
+push r2
+push r3
+push r4
+push r5
+push r6
+loadn r3, #0 ;square char
+loadn r2, #8
+;getting the color using game tetromino adress
+push r2
+inc r2
+add r1, r0, r2
+loadi r1, r1
+pop r2
+;color got
+add r3, r3, r1
+draw_tetromino_loop:
+loadi r4, r0
+inc r0
+loadi r5, r0
+inc r0
+push r0
+push r1
+push r2
+mov r1, r4
+mov r2, r5
+call get_number_in_game_map_from_row_col
+mov r6, r0
+pop r2
+pop r1
+pop r0
+outchar r3, r6
+dec r2
+dec r2
+jz draw_tetromino_exit
+jmp draw_tetromino_loop
+draw_tetromino_exit:
+pop r6
+pop r5
+pop r4
+pop r3
+pop r2
+pop r1
+pop r0
+pop fr
+rts
 ;This function will put ' ' in all screen
 clear_screen:
 push fr
@@ -1753,7 +1810,29 @@ pop r1
 pop r0
 pop fr
 rts
-;this function receives from R5(row) R6(col) and output the draw number at R7(number)
+; This function receives from R1(row) R2(col)
+; and output the draw number at R0(number)
+get_number_in_game_map_from_row_col:
+push fr
+push r1
+push r2
+push r3
+loadn r3, #40
+; multiply function call
+push r1
+push r2
+mov r1, r3
+mov r2, r1
+call multiply
+pop r2
+pop r1
+add r0, r0, r2; now the number is returned
+get_number_in_game_map_from_row_col_exit:
+pop r3
+pop r2
+pop r1
+pop fr
+rts
 ;this function receives from R7(number) the number in the game map array and output at R5(row) and R6(collumn)
 ; This function will set the game tetromino state.
 ; The arguments are r0, r1, r2, r3:
@@ -1775,10 +1854,36 @@ loadn r6, #32
 loadn r5, #8
 ;getting the memory adress of the prefab selected and rotation
 push r2 ; saving the rotation value for later
-mult r7, r0, r6
+;this is a function call to substitute the above instruction that does not work
+;mult r7, r0, r6
+push r0
+push r1
+push r2
+mov r0, r7
+mov r1, r0
+mov r2, r6
+call multiply
+mov r7, r0
+pop r2
+pop r1
+pop r0
+;end call
 add r7, r4, r7
 push r7 ; saving the prefab adress with rotation zero, to store in game tetromino
-mult r2, r2, r5
+;this is a function call to substitute the above instruction that does not work
+;mult r2, r2, r5
+push r0
+push r1
+push r2
+mov r0, r2
+mov r1, r2
+mov r2, r5
+call multiply
+mov r2, r0
+pop r2
+pop r1
+pop r0
+;end call
 add r7, r2, r7
 set_tetromino_loop:
 storei r3, r7
@@ -1806,5 +1911,20 @@ pop r3
 pop r2
 pop r1
 pop r0
+pop fr
+rts
+; this function will multiply r1, r2, and put the result in r0
+multiply:
+push fr
+push r1
+push r2
+multiply_loop:
+add r0, r1, r1
+dec r2
+jz multiply_exit
+jmp multiply_loop
+multiply_exit:
+pop r2
+pop r1
 pop fr
 rts
