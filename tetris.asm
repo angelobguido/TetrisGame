@@ -1864,7 +1864,6 @@ push r2 ; saving the rotation value for later
 push r0
 push r1
 push r2
-mov r0, r7
 mov r1, r0
 mov r2, r6
 call multiply
@@ -1880,9 +1879,8 @@ push r7 ; saving the prefab adress with rotation zero, to store in game tetromin
 push r0
 push r1
 push r2
-mov r0, r2
-mov r1, r2
-mov r2, r5
+mov r1, r5
+mov r2, r2
 call multiply
 mov r2, r0
 pop r2
@@ -1891,23 +1889,23 @@ pop r0
 ;end call
 add r7, r2, r7
 set_tetromino_loop:
-store r3, r7
+loadi r6, r7 ;Get the position in the adress
+storei r3, r6 ;Put position in another adress
 inc r3
 inc r7
 dec r5
-jz set_tetromino_exit
-jmp set_tetromino_loop
+jnz set_tetromino_loop
 set_tetromino_exit:
 ; storing the color
-store r3, r1
+storei r3, r1
 inc r3
 ; storing the prefab adress
 pop r7
-store r3, r7
+storei r3, r7
 inc r3
 ; storing the rotation
 pop r2
-store r3, r2
+storei r3, r2
 pop r7
 pop r6
 pop r5
