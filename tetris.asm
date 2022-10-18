@@ -1677,13 +1677,22 @@ push r2
 push r3
 loadn r0, #1 ; '0' stands for "I tetromino"
 loadn r1, #512
-loadn r2, #0
+loadn r2, #3
 loadn r3, #current_tetromino_pixels_array
 call set_tetromino
 push r0
+push r1
 mov r0, r3
+loadn r1, #10
+test_tetromino_manipulation_rotation_loop:
 call draw_tetromino
+call delay
+call clear_tetromino
+call rotate_tetromino
+dec r1
+jnz test_tetromino_manipulation_rotation_loop
 pop r0
+pop r1
 pop r3
 pop r2
 pop r1
@@ -1762,6 +1771,47 @@ pop r1
 pop r0
 pop fr
 rts
+; This function will "undraw" the tetromino.
+; The argument is r0:
+; the tetromino first adress.
+clear_tetromino:
+push fr
+push r0
+push r1
+push r2
+push r3
+push r4
+push r5
+loadn r2, #' ' ;empty char
+loadn r1, #8
+clear_tetromino_loop:
+loadi r3, r0
+inc r0
+loadi r4, r0
+inc r0
+push r0
+push r1
+push r2
+mov r1, r3
+mov r2, r4
+call get_number_in_game_map_from_row_col
+mov r5, r0
+pop r2
+pop r1
+pop r0
+outchar r2, r5
+dec r1
+dec r1
+jnz clear_tetromino_loop
+clear_tetromino_exit:
+pop r5
+pop r4
+pop r3
+pop r2
+pop r1
+pop r0
+pop fr
+rts
 ;This function will put ' ' in all screen
 clear_screen:
 push fr
@@ -1830,6 +1880,72 @@ pop r1
 pop fr
 rts
 ;this function receives from R7(number) the number in the game map array and output at R5(row) and R6(collumn)
+; This function will rotate positive the game tetromino.
+; The arguments is r0:
+; the memory adress of the tetromino you want
+; to rotate positive(clockwise).
+rotate_tetromino:
+push fr
+push r0
+push r1
+push r2
+push r3
+push r4
+push r5
+push r6
+loadn r4, #8
+loadn r3, #3
+; getting prefab and rotation
+push r4 ;saving pixel array size for later
+inc r4
+add r5, r4, r0
+loadi r5, r5 ; getting the adress of the prefab
+inc r4
+add r2, r4, r0 ; getting the tetromino rotation adress
+loadi r1, r2 ; getting the tetromino rotation number
+pop r4
+; end getting prefab and rotation
+cmp r1, r3
+jeq rotate_tetromino_zero
+jmp rotate_tetromino_nonzero
+rotate_tetromino_loop:
+loadi r6, r5
+storei r0, r6
+inc r5
+inc r0
+dec r4
+jnz rotate_tetromino_loop
+rotate_tetromino_exit:
+pop r6
+pop r5
+pop r4
+pop r3
+pop r2
+pop r1
+pop r0
+pop fr
+rts
+rotate_tetromino_zero:
+loadn r1, #0
+storei r2, r1
+jmp rotate_tetromino_loop
+rotate_tetromino_nonzero:
+inc r1
+storei r2, r1
+; getting the adress of rotated tetromino
+push r0
+push r1
+push r2
+mov r1, r1
+mov r2, r4
+call multiply
+mov r1, r0
+add r5, r5, r1
+pop r2
+pop r1
+pop r0
+; end getting the adress
+jmp rotate_tetromino_loop
 ; This function will set the game tetromino state.
 ; The arguments are r0, r1, r2, r3:
 ; selecting the tetromino, the color, the rotation,
@@ -1907,6 +2023,34 @@ pop r1
 pop r0
 pop fr
 rts
+;will delay a little
+delay:
+push fr
+push r0
+push r1
+push r2
+push r3
+loadn r0, #63000
+loadn r1, #100
+loadn r2, #0
+delay_loop:
+dec r0
+cmp r0, r2
+jeq delay_restart
+jmp delay_loop
+delay_end:
+pop r3
+pop r2
+pop r1
+pop r0
+pop fr
+rts
+delay_restart:
+dec r1
+cmp r1, r2
+jeq delay_end
+loadn r0, #63000
+jmp delay_loop
 ; this function will multiply r1, r2
 ;, and put the result in r0
 multiply:
