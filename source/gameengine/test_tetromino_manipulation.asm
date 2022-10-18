@@ -8,8 +8,8 @@ push r1
 push r2
 push r3
 
-loadn SELECTED_TETROMINO, #0 ; '0' stands for "I tetromino"
-loadn SELECTED_COLOR, #RED
+loadn SELECTED_TETROMINO, #1 ; '0' stands for "I tetromino"
+loadn SELECTED_COLOR, #GREEN
 loadn SELECTED_ROTATION, #0
 loadn GAME_TETROMINO_ADRESS, #current_tetromino_pixels_array
 
