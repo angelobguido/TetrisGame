@@ -8,6 +8,8 @@ SOURCE_FILES_ARGS =$(subst |, ,$(addprefix <|, $(subst ./source/, ,$(SOURCE_FILE
 
 MIF_FILE = $(PROJECT_NAME).mif
 
+default: clean all
+
 all: $(MIF_FILE)
 	./sim $(MIF_FILE) charmap.mif 
 

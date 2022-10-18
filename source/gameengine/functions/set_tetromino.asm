@@ -84,9 +84,7 @@ inc GAME_TETROMINO_ADRESS
 inc CHOSEN_TETROMINO_ADRESS
 
 dec PIXEL_ARRAY_SIZE
-jz set_tetromino_exit
-
-jmp set_tetromino_loop
+jnz set_tetromino_loop
 
 set_tetromino_exit:
 

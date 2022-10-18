@@ -24,11 +24,8 @@ loadn CHAR_REPRESENTATION, #0 ;square char
 loadn PIXEL_ARRAY_SIZE, #8
 
 ;getting the color using game tetromino adress
-push PIXEL_ARRAY_SIZE
-inc PIXEL_ARRAY_SIZE
 add TETROMINO_COLOR, GAME_TETROMINO_ADRESS, PIXEL_ARRAY_SIZE
 loadi TETROMINO_COLOR, TETROMINO_COLOR
-pop PIXEL_ARRAY_SIZE
 ;color got
 
 add CHAR_REPRESENTATION, CHAR_REPRESENTATION, TETROMINO_COLOR
@@ -59,9 +56,7 @@ outchar CHAR_REPRESENTATION, CURRENT_PIXEL_GAME_POSITION
 dec PIXEL_ARRAY_SIZE
 dec PIXEL_ARRAY_SIZE
 
-jz draw_tetromino_exit
-jmp draw_tetromino_loop
-
+jnz draw_tetromino_loop
 
 draw_tetromino_exit:
 pop r6

@@ -8,7 +8,7 @@ push fr
 push r0
 push r1
 
-loadn CURRENT_POSITION_IN_SCREEN, #1200
+loadn CURRENT_POSITION_IN_SCREEN, #1199
 loadn SPACE_CHAR, #' '
 
 clear_screen_loop:
@@ -16,15 +16,14 @@ clear_screen_loop:
 outchar SPACE_CHAR, CURRENT_POSITION_IN_SCREEN
 
 dec CURRENT_POSITION_IN_SCREEN
-jz clear_screen_exit
-
-jmp clear_screen_loop
+jnz clear_screen_loop
 
 clear_screen_exit:
 
 pop r1
 pop r0
 pop fr
+rts
 
 #undef CURRENT_POSITION_IN_SCREEN
 #undef SPACE_CHAR

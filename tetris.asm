@@ -283,6 +283,15 @@ current_tetromino_pixels_array : var #8 ; 2 bytes per pixel, 4 pixels per tetrom
 current_tetromino_color : var #1 ; this will be the color for all pixels in one tetromino
 current_tetromino_prefab_adress : var #1 ; this will store the current prefab with rotation 0, that the tetromino is using
 current_tetromino_rotation : var #1; this will save the current rotation
+static current_tetromino_pixels_array + #0, #4 ; pivot pixel row position
+static current_tetromino_pixels_array + #1, #4 ; pivot pixel column position
+static current_tetromino_pixels_array + #2, #3 ; 1st pixel row position
+static current_tetromino_pixels_array + #3, #4 ; 1st pixel column position
+static current_tetromino_pixels_array + #4, #5 ; 2nd pixel row position
+static current_tetromino_pixels_array + #5, #4 ; 2nd pixel column position
+static current_tetromino_pixels_array + #6, #6 ; 3th pixel row position
+static current_tetromino_pixels_array + #7, #4 ; 3th pixel column position
+static current_tetromino_color, #512
 ; next tetromino
 next_tetromino_pixels_array : var #8
 next_tetromino_color : var #1
@@ -1729,11 +1738,8 @@ push r6
 loadn r3, #0 ;square char
 loadn r2, #8
 ;getting the color using game tetromino adress
-push r2
-inc r2
 add r1, r0, r2
 loadi r1, r1
-pop r2
 ;color got
 add r3, r3, r1
 draw_tetromino_loop:
@@ -1754,8 +1760,7 @@ pop r0
 outchar r3, r6
 dec r2
 dec r2
-jz draw_tetromino_exit
-jmp draw_tetromino_loop
+jnz draw_tetromino_loop
 draw_tetromino_exit:
 pop r6
 pop r5
@@ -1771,17 +1776,17 @@ clear_screen:
 push fr
 push r0
 push r1
-loadn r0, #1200
+loadn r0, #1199
 loadn r1, #' '
 clear_screen_loop:
 outchar r1, r0
 dec r0
-jz clear_screen_exit
-jmp clear_screen_loop
+jnz clear_screen_loop
 clear_screen_exit:
 pop r1
 pop r0
 pop fr
+rts
 ;This function will get a value from input and store the value in r0
 get_input:
 push fr
@@ -1821,8 +1826,8 @@ loadn r3, #40
 ; multiply function call
 push r1
 push r2
-mov r1, r3
-mov r2, r1
+mov r1, r1
+mov r2, r3
 call multiply
 pop r2
 pop r1
@@ -1886,7 +1891,7 @@ pop r0
 ;end call
 add r7, r2, r7
 set_tetromino_loop:
-storei r3, r7
+store r3, r7
 inc r3
 inc r7
 dec r5
@@ -1894,15 +1899,15 @@ jz set_tetromino_exit
 jmp set_tetromino_loop
 set_tetromino_exit:
 ; storing the color
-storei r3, r1
+store r3, r1
 inc r3
 ; storing the prefab adress
 pop r7
-storei r3, r7
+store r3, r7
 inc r3
 ; storing the rotation
 pop r2
-storei r3, r2
+store r3, r2
 pop r7
 pop r6
 pop r5
@@ -1913,16 +1918,19 @@ pop r1
 pop r0
 pop fr
 rts
-; this function will multiply r1, r2, and put the result in r0
+; this function will multiply r1, r2
+;, and put the result in r0
 multiply:
 push fr
 push r1
 push r2
+loadn r0, #0
+cmp r2, r0 ;if r2 is zero
+jeq multiply_exit
 multiply_loop:
-add r0, r1, r1
+add r0, r1, r0
 dec r2
-jz multiply_exit
-jmp multiply_loop
+jnz multiply_loop
 multiply_exit:
 pop r2
 pop r1

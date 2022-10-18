@@ -17,8 +17,8 @@ loadn NUMBER_OF_COL_PER_ROW, #40
 push r1
 push r2
 
-mov r1, NUMBER_OF_COL_PER_ROW
-mov r2, ROW
+mov r1, ROW
+mov r2, NUMBER_OF_COL_PER_ROW
 
 call multiply
 
@@ -33,3 +33,8 @@ pop r2
 pop r1
 pop fr
 rts
+
+#undef NUMBER
+#undef ROW
+#undef COL
+#undef NUMBER_OF_COL_PER_ROW
