@@ -1677,22 +1677,32 @@ push r2
 push r3
 loadn r0, #1 ; '0' stands for "I tetromino"
 loadn r1, #512
-loadn r2, #3
+loadn r2, #0
 loadn r3, #current_tetromino_pixels_array
 call set_tetromino
+push fr
 push r0
 push r1
+push r2
+push r3
+loadn r1, #30
+loadn r2, #10
 mov r0, r3
-loadn r1, #10
-test_tetromino_manipulation_rotation_loop:
+test_tetromino_position_loop:
 call draw_tetromino
 call delay
 call clear_tetromino
-call rotate_tetromino
+call change_tetromino_position
 dec r1
-jnz test_tetromino_manipulation_rotation_loop
-pop r0
+cmp r1, r2
+jne test_tetromino_position_loop
+loadn r1, #25
+jmp test_tetromino_position_loop
+pop r3
+pop r2
 pop r1
+pop r0
+pop fr
 pop r3
 pop r2
 pop r1
@@ -1880,6 +1890,56 @@ pop r1
 pop fr
 rts
 ;this function receives from R7(number) the number in the game map array and output at R5(row) and R6(collumn)
+; This function will get the arguments: r0, r1, r2.
+; The adress of the tetromino, the new row, and the new column
+change_tetromino_position:
+push fr
+push r0
+push r1
+push r2
+push r3
+push r4
+push r5
+push r6
+push r7
+loadn r7, #8
+; getting current pivot off set
+push r0
+loadi r5, r0
+inc r0
+loadi r6, r0
+pop r0
+; end getting current pivot off set
+;will change the position of every pixel in pixel array
+change_tetromino_position_loop:
+loadi r3, r0
+inc r0
+loadi r4, r0
+inc r0
+add r3, r3, r1
+sub r3, r3, r5
+add r4, r4, r2
+sub r4, r4, r6
+dec r0
+dec r0
+storei r0, r3
+inc r0
+storei r0, r4
+inc r0
+dec r7
+dec r7
+jnz change_tetromino_position_loop
+change_tetromino_position_end:
+pop r7
+pop r6
+pop r5
+pop r4
+pop r3
+pop r2
+pop r1
+pop r0
+pop fr
+rts
 ; This function will rotate positive the game tetromino.
 ; The arguments is r0:
 ; the memory adress of the tetromino you want

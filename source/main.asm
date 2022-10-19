@@ -12,7 +12,7 @@ main:
 
     call clear_screen
 
-    #include "./gameengine/test_tetromino_manipulation.asm"
+    #include "../tests/test_tetromino_position.asm"
 
     halt
 
