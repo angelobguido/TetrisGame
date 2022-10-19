@@ -1675,8 +1675,8 @@ push r0
 push r1
 push r2
 push r3
-loadn r0, #1 ; '0' stands for "I tetromino"
-loadn r1, #512
+loadn r0, #0 ; '0' stands for "I tetromino"
+loadn r1, #2304
 loadn r2, #0
 loadn r3, #current_tetromino_pixels_array
 call set_tetromino
@@ -1688,16 +1688,17 @@ push r3
 loadn r1, #30
 loadn r2, #10
 mov r0, r3
-test_tetromino_position_loop:
+test_tetromino_rotation_and_position_loop:
 call draw_tetromino
 call delay
 call clear_tetromino
 call change_tetromino_position
+call rotate_tetromino
 dec r1
 cmp r1, r2
-jne test_tetromino_position_loop
+jne test_tetromino_rotation_and_position_loop
 loadn r1, #25
-jmp test_tetromino_position_loop
+jmp test_tetromino_rotation_and_position_loop
 pop r3
 pop r2
 pop r1
@@ -1953,6 +1954,7 @@ push r3
 push r4
 push r5
 push r6
+push r7
 loadn r4, #8
 loadn r3, #3
 ; getting prefab and rotation
@@ -1965,6 +1967,14 @@ add r2, r4, r0 ; getting the tetromino rotation adress
 loadi r1, r2 ; getting the tetromino rotation number
 pop r4
 ; end getting prefab and rotation
+; getting pivot position to change position later
+push r0 ;saving adress for the change position function call
+loadi r6, r0
+inc r0
+loadi r7, r0
+dec r0
+push r6 ; saving r6, because it is used when getting the pixels from prefab
+; end getting pivot position
 cmp r1, r3
 jeq rotate_tetromino_zero
 jmp rotate_tetromino_nonzero
@@ -1976,6 +1986,13 @@ inc r0
 dec r4
 jnz rotate_tetromino_loop
 rotate_tetromino_exit:
+pop r6
+pop r0
+mov r0, r0
+mov r1, r6
+mov r2, r7
+call change_tetromino_position
+pop r7
 pop r6
 pop r5
 pop r4

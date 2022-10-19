@@ -12,7 +12,7 @@ main:
 
     call clear_screen
 
-    #include "../tests/test_tetromino_position.asm"
+    #include "../tests/test_tetromino_rotation_and_position.asm"
 
     halt
 

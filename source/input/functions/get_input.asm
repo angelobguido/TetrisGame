@@ -7,6 +7,8 @@ get_input:
 push fr
 push r1
 
+loadn NULL_VALUE, #0
+
 get_input_loop:
 
 inchar VALUE_GOT

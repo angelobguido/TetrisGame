@@ -20,6 +20,7 @@ push r3
 push r4
 push r5
 push r6
+push r7
 
 
 loadn PIXEL_ARRAY_SIZE, #8
@@ -39,6 +40,17 @@ loadi TETROMINO_ROTATION, TETROMINO_ROTATION_ADRESS ; getting the tetromino rota
 pop PIXEL_ARRAY_SIZE
 ; end getting prefab and rotation
 
+; getting pivot position to change position later
+push GAME_TETROMINO_ADRESS ;saving adress for the change position function call
+#define ROW_PIVOT_POSITION r6
+#define COLUMN_PIVOT_POSITION r7
+loadi ROW_PIVOT_POSITION, GAME_TETROMINO_ADRESS
+inc GAME_TETROMINO_ADRESS
+loadi COLUMN_PIVOT_POSITION, GAME_TETROMINO_ADRESS
+dec GAME_TETROMINO_ADRESS
+push ROW_PIVOT_POSITION ; saving r6, because it is used when getting the pixels from prefab
+; end getting pivot position
+
 cmp TETROMINO_ROTATION, MAX_TETROMINO_ROTATION
 jeq rotate_tetromino_zero
 
@@ -57,6 +69,16 @@ jnz rotate_tetromino_loop
 
 rotate_tetromino_exit:
 
+pop ROW_PIVOT_POSITION
+pop GAME_TETROMINO_ADRESS
+
+mov r0, GAME_TETROMINO_ADRESS
+mov r1, ROW_PIVOT_POSITION
+mov r2, COLUMN_PIVOT_POSITION
+
+call change_tetromino_position
+
+pop r7
 pop r6
 pop r5
 pop r4
@@ -102,3 +124,5 @@ jmp rotate_tetromino_loop
 #undef PIXEL_ARRAY_SIZE
 #undef PREFAB_TETROMINO_ADRESS
 #undef CURRENT_PIXEL_POSITION
+#undef ROW_PIVOT_POSITION
+#undef COLUMN_PIVOT_POSITION
