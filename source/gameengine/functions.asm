@@ -2,3 +2,4 @@
 #include "./functions/rotate_tetromino.asm"
 #include "./functions/set_tetromino.asm"
 #include "./functions/delay.asm"
+#include "./functions/copy_next_to_current.asm"

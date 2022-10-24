@@ -8,8 +8,8 @@ push r1
 push r2
 push r3
 
-loadn SELECTED_TETROMINO, #0 ; '0' stands for "I tetromino"
-loadn SELECTED_COLOR, #RED
+loadn SELECTED_TETROMINO, #1 ; '0' stands for "I tetromino"
+loadn SELECTED_COLOR, #BLUE
 loadn SELECTED_ROTATION, #0
 loadn GAME_TETROMINO_ADRESS, #current_tetromino_pixels_array
 
@@ -20,9 +20,11 @@ push r0
 push r1
 push r2
 push r3
+push r4
 
 loadn r1, #30
 loadn r2, #10
+loadn r4, #0
 
 mov r0, GAME_TETROMINO_ADRESS
 
@@ -35,12 +37,14 @@ call change_tetromino_position
 call rotate_tetromino
 
 dec r1
-cmp r1, r2
+inc r2
+cmp r1, r4
 
 jne test_tetromino_rotation_and_position_loop
 loadn r1, #25
 jmp test_tetromino_rotation_and_position_loop
 
+pop r4
 pop r3
 pop r2
 pop r1
