@@ -2943,6 +2943,63 @@ game_screen:
   pop R1
   pop R0
   pop fr
+game_loop:
+;UpdateGame:
+; cmp CurrentState ChooseNewTetrominoState --> Will verify if a new tetronimo need to be chosen
+; ceq UpdateGame_ChooseNewTetromino
+;
+; save current tetromino position and rotation
+; see input control (Rotation or go to sides) and save new position
+;
+; this block can be a function later
+; {
+; verify collisions with walls
+; cmp CollisionState CollidedWithWalls
+; jeq UpdateGame_InvalidMovement --> This will return the position to the old one
+;
+; verify collisions with pixel map
+; cmp CollisionState CollidedWithPixelMap
+; jep UpdateGame_InvalidMovement
+; }
+;
+; UpdateGame_InvalidMovement:
+; jne UpdateGame_InvalidMovement_End --> If none of the invalid collisions happend, go to move tetromino
+; return the position to the old one
+; UpdateGame_InvalidMovement_End:
+;
+; move tetromino down --> will move the next position down
+;
+; verify collisions with border
+; cmp CollisionState CollidedWithBorder
+; jeq UpdateGame_FixTetromino
+;
+; UpdateGame_FixTetromino:
+; jne UpdateGame_FixTetromino_End
+; return the position to the old one
+; update pixel map with new tetromino
+; change state to ChooseNewTetrominoState
+; UpdateGame_FixTetromino_End:
+;
+; rts
+push r0
+push r1
+push r2
+push r3
+loadn r0, #1 ; '0' stands for "I tetromino"
+loadn r1, #512
+loadn r2, #0
+loadn r3, #current_tetromino_pixels_array
+call set_tetromino
+push fr
+push r0
+push r1
+push r2
+push r3
+push r0
+loadn r0, #current_tetromino_pixels_array
+call draw_tetromino
+pop r0
+jmp game_loop
     halt
 print_string: ; Rotina de Impresao de Mensagens: r0 = Posicao da tela que o primeiro caractere da mensagem sera' impresso;  r1 = endereco onde comeca a mensagem; r2 = cor da mensagem.   Obs: a mensagem sera' impressa ate' encontrar "/0"
  push fr ; Protege o registrador de flags

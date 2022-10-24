@@ -14,6 +14,8 @@ main:
 
     #include "./draw/game_screen.asm"
 
+    #include "./gameengine/game_loop.asm"
+
     halt
 
 #include "./draw/functions.asm"
