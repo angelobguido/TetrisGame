@@ -3111,14 +3111,7 @@ push r1
 push r2
 push r3
 loadn r3, #40
-; multiply function call
-push r1
-push r2
-mov r1, r1
-mov r2, r3
-call multiply
-pop r2
-pop r1
+mul r0, r1, r3
 add r0, r0, r2; now the number is returned
 get_number_in_game_map_from_row_col_exit:
 pop r3
@@ -3246,17 +3239,8 @@ rotate_tetromino_nonzero:
 inc r1
 storei r2, r1
 ; getting the adress of rotated tetromino
-push r0
-push r1
-push r2
-mov r1, r1
-mov r2, r4
-call multiply
-mov r1, r0
+mul r1, r1, r4
 add r5, r5, r1
-pop r2
-pop r1
-pop r0
 ; end getting the adress
 jmp rotate_tetromino_loop
 ; This function will set the game tetromino state.
@@ -3279,34 +3263,10 @@ loadn r6, #32
 loadn r5, #8
 ;getting the memory adress of the prefab selected and rotation
 push r2 ; saving the rotation value for later
-;this is a function call to substitute the above instruction that does not work
-;mult r7, r0, r6
-push r0
-push r1
-push r2
-mov r1, r0
-mov r2, r6
-call multiply
-mov r7, r0
-pop r2
-pop r1
-pop r0
-;end call
+mul r7, r0, r6
 add r7, r4, r7
 push r7 ; saving the prefab adress with rotation zero, to store in game tetromino
-;this is a function call to substitute the above instruction that does not work
-;mult r2, r2, r5
-push r0
-push r1
-push r2
-mov r1, r5
-mov r2, r2
-call multiply
-mov r2, r0
-pop r2
-pop r1
-pop r0
-;end call
+mul r2, r2, r5
 add r7, r2, r7
 set_tetromino_loop:
 loadi r6, r7 ;Get the position in the adress
@@ -3388,21 +3348,3 @@ pop r2
 pop r1
 pop r0
 pop fr
-; this function will multiply r1, r2
-;, and put the result in r0
-multiply:
-push fr
-push r1
-push r2
-loadn r0, #0
-cmp r2, r0 ;if r2 is zero
-jeq multiply_exit
-multiply_loop:
-add r0, r1, r0
-dec r2
-jnz multiply_loop
-multiply_exit:
-pop r2
-pop r1
-pop fr
-rts

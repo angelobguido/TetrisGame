@@ -13,17 +13,7 @@ push r3
 
 loadn NUMBER_OF_COL_PER_ROW, #40
 
-; multiply function call
-push r1
-push r2
-
-mov r1, ROW
-mov r2, NUMBER_OF_COL_PER_ROW
-
-call multiply
-
-pop r2
-pop r1
+mul NUMBER, ROW, NUMBER_OF_COL_PER_ROW
 
 add NUMBER, NUMBER, COL; now the number is returned
 

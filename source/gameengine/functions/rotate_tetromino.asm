@@ -99,22 +99,10 @@ inc TETROMINO_ROTATION
 storei TETROMINO_ROTATION_ADRESS, TETROMINO_ROTATION
 
 ; getting the adress of rotated tetromino
-push r0
-push r1
-push r2
-
-mov r1, TETROMINO_ROTATION
-mov r2, PIXEL_ARRAY_SIZE
-
-call multiply
-
-mov TETROMINO_ROTATION, r0
+mul TETROMINO_ROTATION, TETROMINO_ROTATION, PIXEL_ARRAY_SIZE
 add PREFAB_TETROMINO_ADRESS, PREFAB_TETROMINO_ADRESS, TETROMINO_ROTATION
-
-pop r2
-pop r1
-pop r0
 ; end getting the adress
+
 jmp rotate_tetromino_loop
 
 #undef GAME_TETROMINO_ADRESS

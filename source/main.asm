@@ -20,4 +20,3 @@ main:
 #include "./input/functions.asm"
 #include "./vector/functions.asm"
 #include "./gameengine/functions.asm"
-#include "./math/functions.asm"

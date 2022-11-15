@@ -32,45 +32,13 @@ loadn PIXEL_ARRAY_SIZE, #8
 
 push SELECTED_ROTATION ; saving the rotation value for later
 
-;this is a function call to substitute the above instruction that does not work
-;mult CHOSEN_TETROMINO_ADRESS, SELECTED_TETROMINO, TETROMINO_SIZE
-push r0
-push r1
-push r2
-
-mov r1, SELECTED_TETROMINO
-mov r2, TETROMINO_SIZE
-
-call multiply
-
-mov CHOSEN_TETROMINO_ADRESS, r0
-
-pop r2
-pop r1
-pop r0
-;end call
+mul CHOSEN_TETROMINO_ADRESS, SELECTED_TETROMINO, TETROMINO_SIZE
 
 add CHOSEN_TETROMINO_ADRESS, FIRST_TETROMINO_ADRESS, CHOSEN_TETROMINO_ADRESS 
 
 push CHOSEN_TETROMINO_ADRESS ; saving the prefab adress with rotation zero, to store in game tetromino
 
-;this is a function call to substitute the above instruction that does not work
-;mult SELECTED_ROTATION, SELECTED_ROTATION, PIXEL_ARRAY_SIZE
-push r0
-push r1
-push r2
-
-mov r1, PIXEL_ARRAY_SIZE
-mov r2, SELECTED_ROTATION
-
-call multiply
-
-mov SELECTED_ROTATION, r0
-
-pop r2
-pop r1
-pop r0
-;end call
+mul SELECTED_ROTATION, SELECTED_ROTATION, PIXEL_ARRAY_SIZE
 
 add CHOSEN_TETROMINO_ADRESS, SELECTED_ROTATION, CHOSEN_TETROMINO_ADRESS
 
