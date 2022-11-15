@@ -278,6 +278,10 @@ static game_pixels_array_with_values + #196, #0
 static game_pixels_array_with_values + #197, #0
 static game_pixels_array_with_values + #198, #0
 static game_pixels_array_with_values + #199, #0
+game_current_state: var #1
+static game_current_state, #0
+collision_current_state: var #1
+static collision_current_state, #0
 ; current tetromino
 current_tetromino_pixels_array : var #8 ; 2 bytes per pixel, 4 pixels per tetromino
 current_tetromino_color : var #1 ; this will be the color for all pixels in one tetromino
