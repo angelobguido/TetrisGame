@@ -3176,7 +3176,20 @@ pop r2
 pop r1
 pop fr
 rts
-;this function receives from R7(number) the number in the game map array and output at R5(row) and R6(collumn)
+;This function receives from R0(number) the number in the
+;game map array and output at R1(row) and R2(collumn)
+get_row_col_from_number_in_game_map:
+push fr
+push r0
+push r3
+loadn r3, #40
+div r1, r1, r3
+mod r2, r1, r3
+get_row_col_from_number_in_game_map_exit:
+pop r3
+pop r0
+pop fr
+rts
 ; This function will get the arguments: r0, r1, r2.
 ; The adress of the tetromino, the new row, and the new column
 change_tetromino_position:
