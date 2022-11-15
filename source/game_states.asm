@@ -1,4 +1,5 @@
 #define CHOOSE_NEW_TETROMINO_STATE 0
+#define IN_GAME_STATE 1
 
 
 #define NO_COLLISION 0
