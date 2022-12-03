@@ -36,30 +36,26 @@
 ;
 ;   rts
 
-#define SELECTED_TETROMINO r0
-#define SELECTED_COLOR r1
-#define SELECTED_ROTATION r2
-#define GAME_TETROMINO_ADRESS r3
+update_game_state:
 
-push r0
-push r1
-push r2
-push r3
+;verify wall two times
+jmp update_game_state_verify_wall
+update_game_state_verify_wall_exit:
 
-loadn SELECTED_TETROMINO, #1 ; '0' stands for "I tetromino"
-loadn SELECTED_COLOR, #GREEN
-loadn SELECTED_ROTATION, #0
-loadn GAME_TETROMINO_ADRESS, #current_tetromino_pixels_array
+call tetromino_go_down
 
-call set_tetromino
+call verify_floor
+jeq update_game_state_reset
 
-push fr
-push r0
-push r1
-push r2
-push r3
+jmp update_game_state_exit
 
-#undef SELECTED_TETROMINO
-#undef SELECTED_COLOR
-#undef SELECTED_ROTATION
-#undef GAME_TETROMINO_ADRESS
+update_game_state_reset:
+call tetromino_reset
+jmp update_game_state_exit
+
+update_game_state_verify_wall:
+call verify_wall
+jeq update_game_state_verify_wall
+jmp update_game_state_verify_wall_exit
+
+update_game_state_exit:

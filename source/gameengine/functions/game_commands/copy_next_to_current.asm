@@ -36,3 +36,4 @@ pop r2
 pop r1
 pop r0
 pop fr
+rts

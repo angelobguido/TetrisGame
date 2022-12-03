@@ -2,6 +2,7 @@
 #define NULL_VALUE r1
 
 ;This function will get a value from input and store the value in r0
+;waiting until a non null value is pressed
 get_input:
 
 push fr

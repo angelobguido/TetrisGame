@@ -9,3 +9,7 @@ next_tetromino_pixels_array : var #8
 next_tetromino_color : var #1
 next_tetromino_prefab_adress : var #1
 next_tetromino_rotation : var #1
+
+; tetromino next prefab
+tetromino_next_prefab_index : var #1
+static tetromino_next_prefab_index, #0

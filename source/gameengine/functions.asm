@@ -2,4 +2,12 @@
 #include "./functions/rotate_tetromino.asm"
 #include "./functions/set_tetromino.asm"
 #include "./functions/delay.asm"
-#include "./functions/copy_next_to_current.asm"
+
+#include "./functions/game_commands/tetromino_go_down.asm"
+#include "./functions/game_commands/tetromino_go_right.asm"
+#include "./functions/game_commands/tetromino_go_left.asm"
+#include "./functions/game_commands/tetromino_go_rotate.asm"
+#include "./functions/game_commands/copy_next_to_current.asm"
+#include "./functions/game_commands/tetromino_reset.asm"
+#include "./functions/game_commands/verify_floor.asm"
+#include "./functions/game_commands/verify_wall.asm"

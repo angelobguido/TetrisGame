@@ -292,6 +292,9 @@ next_tetromino_pixels_array : var #8
 next_tetromino_color : var #1
 next_tetromino_prefab_adress : var #1
 next_tetromino_rotation : var #1
+; tetromino next prefab
+tetromino_next_prefab_index : var #1
+static tetromino_next_prefab_index, #0
 ; ... I tetromino
 ; rotation 0
 ; #$##
@@ -2947,7 +2950,40 @@ game_screen:
   pop R1
   pop R0
   pop fr
+call tetromino_reset
 game_loop:
+;This procedure will get an input from the player and execute the command
+push fr
+push r0
+push r1
+push r2
+push r3
+loadn r0, #'d'
+loadn r1, #'a'
+loadn r2, #'w'
+inchar r3
+cmp r0, r3
+jeq get_move_input_right
+cmp r1, r3
+jeq get_move_input_left
+cmp r2, r3
+jeq get_move_input_rotate
+jmp get_move_input_exit
+get_move_input_right:
+call tetromino_go_right
+jmp get_move_input_exit
+get_move_input_left:
+call tetromino_go_left
+jmp get_move_input_exit
+get_move_input_rotate:
+call tetromino_go_rotate
+jmp get_move_input_exit
+get_move_input_exit:
+pop r3
+pop r2
+pop r1
+pop r0
+pop fr
 ;UpdateGame:
 ; cmp CurrentState ChooseNewTetrominoState --> Will verify if a new tetronimo need to be chosen
 ; ceq UpdateGame_ChooseNewTetromino
@@ -2985,24 +3021,29 @@ game_loop:
 ; UpdateGame_FixTetromino_End:
 ;
 ; rts
-push r0
-push r1
-push r2
-push r3
-loadn r0, #1 ; '0' stands for "I tetromino"
-loadn r1, #512
-loadn r2, #0
-loadn r3, #current_tetromino_pixels_array
-call set_tetromino
-push fr
-push r0
-push r1
-push r2
-push r3
+update_game_state:
+;verify wall two times
+jmp update_game_state_verify_wall
+update_game_state_verify_wall_exit:
+call tetromino_go_down
+call verify_floor
+jeq update_game_state_reset
+jmp update_game_state_exit
+update_game_state_reset:
+call tetromino_reset
+jmp update_game_state_exit
+update_game_state_verify_wall:
+call verify_wall
+jeq update_game_state_verify_wall
+jmp update_game_state_verify_wall_exit
+update_game_state_exit:
 push r0
 loadn r0, #current_tetromino_pixels_array
+call clear_tetromino
+call copy_next_to_current
 call draw_tetromino
 pop r0
+call delay
 jmp game_loop
     halt
 print_string: ; Rotina de Impresao de Mensagens: r0 = Posicao da tela que o primeiro caractere da mensagem sera' impresso;  r1 = endereco onde comeca a mensagem; r2 = cor da mensagem.   Obs: a mensagem sera' impressa ate' encontrar "/0"
@@ -3136,6 +3177,7 @@ pop r0
 pop fr
 rts
 ;This function will get a value from input and store the value in r0
+;waiting until a non null value is pressed
 get_input:
 push fr
 push r1
@@ -3398,6 +3440,85 @@ cmp r1, r2
 jeq delay_end
 loadn r0, #63000
 jmp delay_loop
+; This function will move the next tetromino one tile down
+tetromino_go_down:
+push fr
+push r0
+push r1
+push r2
+loadn r0, #next_tetromino_pixels_array
+;Getting row value
+mov r1, r0
+loadi r1, r1
+;Getting column value
+inc r0
+mov r2, r0
+loadi r2, r2
+dec r0
+;go down
+inc r1
+call change_tetromino_position
+tetromino_go_down_exit:
+pop r2
+pop r1
+pop r0
+pop fr
+rts
+; This function will move the next tetromino one tile right
+tetromino_go_right:
+push fr
+push r0
+push r1
+push r2
+loadn r0, #next_tetromino_pixels_array
+;Getting row value
+mov r1, r0
+loadi r1, r1
+;Getting column value
+inc r0
+mov r2, r0
+loadi r2, r2
+dec r0
+;go right
+inc r2
+call change_tetromino_position
+tetromino_go_right_exit:
+pop r2
+pop r1
+pop r0
+pop fr
+rts
+; This function will move the next tetromino one tile left
+tetromino_go_left:
+push fr
+push r0
+push r1
+push r2
+loadn r0, #next_tetromino_pixels_array
+;Getting row value
+mov r1, r0
+loadi r1, r1
+;Getting column value
+inc r0
+mov r2, r0
+loadi r2, r2
+dec r0
+;go left
+dec r2
+call change_tetromino_position
+tetromino_go_left_exit:
+pop r2
+pop r1
+pop r0
+pop fr
+rts
+;This function will rotate the next tetromino clockwise
+tetromino_go_rotate:
+push r0
+loadn r0, #next_tetromino_pixels_array
+call rotate_tetromino
+pop r0
+rts
 ; This function will copy all information
 ; from next to current tetromino
 copy_next_to_current:
@@ -3422,3 +3543,97 @@ pop r2
 pop r1
 pop r0
 pop fr
+rts
+;This function will reset the next tetromino
+tetromino_reset:
+push fr
+push r0
+push r1
+push r2
+push r3
+push r4
+push r5
+loadn r4, #2
+loadn r0, #tetromino_next_prefab_index ; '0' stands for "I tetromino"
+loadi r0, r0
+loadn r1, #2304
+loadn r2, #0
+loadn r3, #next_tetromino_pixels_array
+call set_tetromino
+inc r0
+mod r0, r0, r4
+loadn r5, #tetromino_next_prefab_index
+storei r5, r0
+tetromino_reset_exit:
+pop r5
+pop r4
+pop r3
+pop r2
+pop r1
+pop r0
+pop fr
+rts
+; This function will verify if the tetronimo is touching the floor.
+; Change flag register to return true or false, if equal than true.
+verify_floor:
+push r0
+push r1
+push r2
+push r3
+loadn r2, #8
+loadn r3, #29
+loadn r0, #next_tetromino_pixels_array
+;will verify if the position of any pixel in pixel array is touching the floor
+verify_floor_loop:
+loadi r1, r0
+inc r0
+inc r0
+cmp r1, r3
+jeq verify_floor_exit
+dec r2
+dec r2
+jnz verify_floor_loop
+verify_floor_exit:
+pop r3
+pop r2
+pop r1
+pop r0
+rts
+; This function will verify if the tetronimo is touching one of the walls.
+; Change flag register to return true or false, if equal than true.
+; Move tetromino back if needed.
+verify_wall:
+push r0
+push r1
+push r2
+push r3
+push r4
+loadn r2, #8
+loadn r3, #0
+loadn r4, #10
+loadn r0, #next_tetromino_pixels_array
+;will verify if the position of any pixel in pixel array is touching one of the walls
+verify_wall_loop:
+inc r0
+loadi r1, r0
+inc r0
+cmp r1, r3
+jeq verify_wall_go_right
+cmp r1, r4
+jeq verify_wall_go_left
+dec r2
+dec r2
+jnz verify_wall_loop
+verify_wall_exit:
+pop r4
+pop r3
+pop r2
+pop r1
+pop r0
+rts
+verify_wall_go_right:
+call tetromino_go_right
+jmp verify_wall_exit
+verify_wall_go_left:
+call tetromino_go_left
+jmp verify_wall_exit
