@@ -400,14 +400,262 @@ static J_rotation_3_pixels_array + #6, #5 ; 3th pixel row position
 static J_rotation_3_pixels_array + #7, #5 ; 3th pixel column position
 ; end of J tetromino ...
 ; ... L tetromino
+; rotation 0
+; #
+; $
+; ##
+L_rotation_0_pixels_array : var #8
+static L_rotation_0_pixels_array + #0, #4 ; pivot pixel row position
+static L_rotation_0_pixels_array + #1, #4 ; pivot pixel column position
+static L_rotation_0_pixels_array + #2, #3 ; 1st pixel row position
+static L_rotation_0_pixels_array + #3, #4 ; 1st pixel column position
+static L_rotation_0_pixels_array + #4, #5 ; 2nd pixel row position
+static L_rotation_0_pixels_array + #5, #4 ; 2nd pixel column position
+static L_rotation_0_pixels_array + #6, #5 ; 3th pixel row position
+static L_rotation_0_pixels_array + #7, #5 ; 3th pixel column position
+; rotation 1
+; #
+; #$#
+L_rotation_1_pixels_array : var #8
+static L_rotation_1_pixels_array + #0, #4 ; pivot pixel row position
+static L_rotation_1_pixels_array + #1, #4 ; pivot pixel column position
+static L_rotation_1_pixels_array + #2, #4 ; 1st pixel row position
+static L_rotation_1_pixels_array + #3, #5 ; 1st pixel column position
+static L_rotation_1_pixels_array + #4, #4 ; 2nd pixel row position
+static L_rotation_1_pixels_array + #5, #3 ; 2nd pixel column position
+static L_rotation_1_pixels_array + #6, #3 ; 3th pixel row position
+static L_rotation_1_pixels_array + #7, #5 ; 3th pixel column position
+; rotation 2
+;##
+; $
+; #
+L_rotation_2_pixels_array : var #8
+static L_rotation_2_pixels_array + #0, #4 ; pivot pixel row position
+static L_rotation_2_pixels_array + #1, #4 ; pivot pixel column position
+static L_rotation_2_pixels_array + #2, #5 ; 1st pixel row position
+static L_rotation_2_pixels_array + #3, #4 ; 1st pixel column position
+static L_rotation_2_pixels_array + #4, #3 ; 2nd pixel row position
+static L_rotation_2_pixels_array + #5, #4 ; 2nd pixel column position
+static L_rotation_2_pixels_array + #6, #3 ; 3th pixel row position
+static L_rotation_2_pixels_array + #7, #3 ; 3th pixel column position
+; rotation 3
+; #$#
+; #
+L_rotation_3_pixels_array : var #8
+static L_rotation_3_pixels_array + #0, #4 ; pivot pixel row position
+static L_rotation_3_pixels_array + #1, #4 ; pivot pixel column position
+static L_rotation_3_pixels_array + #2, #4 ; 1st pixel row position
+static L_rotation_3_pixels_array + #3, #3 ; 1st pixel column position
+static L_rotation_3_pixels_array + #4, #4 ; 2nd pixel row position
+static L_rotation_3_pixels_array + #5, #5 ; 2nd pixel column position
+static L_rotation_3_pixels_array + #6, #5 ; 3th pixel row position
+static L_rotation_3_pixels_array + #7, #3 ; 3th pixel column position
 ; end of L tetromino ...
 ; ... O tetromino
+; rotation 0
+; $#
+; ##
+O_rotation_0_pixels_array : var #8
+static O_rotation_0_pixels_array + #0, #4 ; pivot pixel row position
+static O_rotation_0_pixels_array + #1, #4 ; pivot pixel column position
+static O_rotation_0_pixels_array + #2, #4 ; 1st pixel row position
+static O_rotation_0_pixels_array + #3, #5 ; 1st pixel column position
+static O_rotation_0_pixels_array + #4, #5 ; 2nd pixel row position
+static O_rotation_0_pixels_array + #5, #5 ; 2nd pixel column position
+static O_rotation_0_pixels_array + #6, #5 ; 3th pixel row position
+static O_rotation_0_pixels_array + #7, #4 ; 3th pixel column position
+; rotation 1
+; #$
+; ##
+O_rotation_1_pixels_array : var #8
+static O_rotation_1_pixels_array + #0, #4 ; pivot pixel row position
+static O_rotation_1_pixels_array + #1, #4 ; pivot pixel column position
+static O_rotation_1_pixels_array + #2, #5 ; 1st pixel row position
+static O_rotation_1_pixels_array + #3, #4 ; 1st pixel column position
+static O_rotation_1_pixels_array + #4, #5 ; 2nd pixel row position
+static O_rotation_1_pixels_array + #5, #3 ; 2nd pixel column position
+static O_rotation_1_pixels_array + #6, #4 ; 3th pixel row position
+static O_rotation_1_pixels_array + #7, #3 ; 3th pixel column position
+; rotation 2
+; ##
+; #$
+O_rotation_2_pixels_array : var #8
+static O_rotation_2_pixels_array + #0, #4 ; pivot pixel row position
+static O_rotation_2_pixels_array + #1, #4 ; pivot pixel column position
+static O_rotation_2_pixels_array + #2, #3 ; 1st pixel row position
+static O_rotation_2_pixels_array + #3, #4 ; 1st pixel column position
+static O_rotation_2_pixels_array + #4, #3 ; 2nd pixel row position
+static O_rotation_2_pixels_array + #5, #3 ; 2nd pixel column position
+static O_rotation_2_pixels_array + #6, #4 ; 3th pixel row position
+static O_rotation_2_pixels_array + #7, #3 ; 3th pixel column position
+; rotation 3
+; ##
+; $#
+O_rotation_3_pixels_array : var #8
+static O_rotation_3_pixels_array + #0, #4 ; pivot pixel row position
+static O_rotation_3_pixels_array + #1, #4 ; pivot pixel column position
+static O_rotation_3_pixels_array + #2, #3 ; 1st pixel row position
+static O_rotation_3_pixels_array + #3, #4 ; 1st pixel column position
+static O_rotation_3_pixels_array + #4, #3 ; 2nd pixel row position
+static O_rotation_3_pixels_array + #5, #5 ; 2nd pixel column position
+static O_rotation_3_pixels_array + #6, #4 ; 3th pixel row position
+static O_rotation_3_pixels_array + #7, #5 ; 3th pixel column position
 ; end of O tetromino ...
 ; ... S tetromino
+; rotation 0
+; $#
+; ##
+S_rotation_0_pixels_array : var #8
+static S_rotation_0_pixels_array + #0, #4 ; pivot pixel row position
+static S_rotation_0_pixels_array + #1, #4 ; pivot pixel column position
+static S_rotation_0_pixels_array + #2, #4 ; 1st pixel row position
+static S_rotation_0_pixels_array + #3, #5 ; 1st pixel column position
+static S_rotation_0_pixels_array + #4, #5 ; 2nd pixel row position
+static S_rotation_0_pixels_array + #5, #4 ; 2nd pixel column position
+static S_rotation_0_pixels_array + #6, #5 ; 3th pixel row position
+static S_rotation_0_pixels_array + #7, #3 ; 3th pixel column position
+; rotation 1
+; #
+; #$
+; #
+S_rotation_1_pixels_array : var #8
+static S_rotation_1_pixels_array + #0, #4 ; pivot pixel row position
+static S_rotation_1_pixels_array + #1, #4 ; pivot pixel column position
+static S_rotation_1_pixels_array + #2, #5 ; 1st pixel row position
+static S_rotation_1_pixels_array + #3, #4 ; 1st pixel column position
+static S_rotation_1_pixels_array + #4, #4 ; 2nd pixel row position
+static S_rotation_1_pixels_array + #5, #3 ; 2nd pixel column position
+static S_rotation_1_pixels_array + #6, #3 ; 3th pixel row position
+static S_rotation_1_pixels_array + #7, #3 ; 3th pixel column position
+; rotation 2
+; ##
+; #$
+S_rotation_2_pixels_array : var #8
+static S_rotation_2_pixels_array + #0, #4 ; pivot pixel row position
+static S_rotation_2_pixels_array + #1, #4 ; pivot pixel column position
+static S_rotation_2_pixels_array + #2, #3 ; 1st pixel row position
+static S_rotation_2_pixels_array + #3, #4 ; 1st pixel column position
+static S_rotation_2_pixels_array + #4, #3 ; 2nd pixel row position
+static S_rotation_2_pixels_array + #5, #5 ; 2nd pixel column position
+static S_rotation_2_pixels_array + #6, #4 ; 3th pixel row position
+static S_rotation_2_pixels_array + #7, #3 ; 3th pixel column position
+; rotation 3
+; #
+; $#
+; #
+S_rotation_3_pixels_array : var #8
+static S_rotation_3_pixels_array + #0, #4 ; pivot pixel row position
+static S_rotation_3_pixels_array + #1, #4 ; pivot pixel column position
+static S_rotation_3_pixels_array + #2, #3 ; 1st pixel row position
+static S_rotation_3_pixels_array + #3, #4 ; 1st pixel column position
+static S_rotation_3_pixels_array + #4, #4 ; 2nd pixel row position
+static S_rotation_3_pixels_array + #5, #5 ; 2nd pixel column position
+static S_rotation_3_pixels_array + #6, #5 ; 3th pixel row position
+static S_rotation_3_pixels_array + #7, #5 ; 3th pixel column position
 ; end of S tetromino ...
 ; ... T tetromino
+; rotation 0
+; #$#
+; #
+T_rotation_0_pixels_array : var #8
+static T_rotation_0_pixels_array + #0, #4 ; pivot pixel row position
+static T_rotation_0_pixels_array + #1, #4 ; pivot pixel column position
+static T_rotation_0_pixels_array + #2, #4 ; 1st pixel row position
+static T_rotation_0_pixels_array + #3, #3 ; 1st pixel column position
+static T_rotation_0_pixels_array + #4, #4 ; 2nd pixel row position
+static T_rotation_0_pixels_array + #5, #5 ; 2nd pixel column position
+static T_rotation_0_pixels_array + #6, #5 ; 3th pixel row position
+static T_rotation_0_pixels_array + #7, #4 ; 3th pixel column position
+; rotation 1
+; #
+; #$
+; #
+T_rotation_1_pixels_array : var #8
+static T_rotation_1_pixels_array + #0, #4 ; pivot pixel row position
+static T_rotation_1_pixels_array + #1, #4 ; pivot pixel column position
+static T_rotation_1_pixels_array + #2, #3 ; 1st pixel row position
+static T_rotation_1_pixels_array + #3, #4 ; 1st pixel column position
+static T_rotation_1_pixels_array + #4, #5 ; 2nd pixel row position
+static T_rotation_1_pixels_array + #5, #4 ; 2nd pixel column position
+static T_rotation_1_pixels_array + #6, #4 ; 3th pixel row position
+static T_rotation_1_pixels_array + #7, #3 ; 3th pixel column position
+; rotation 2
+; #
+; #$#
+T_rotation_2_pixels_array : var #8
+static T_rotation_2_pixels_array + #0, #4 ; pivot pixel row position
+static T_rotation_2_pixels_array + #1, #4 ; pivot pixel column position
+static T_rotation_2_pixels_array + #2, #4 ; 1st pixel row position
+static T_rotation_2_pixels_array + #3, #3 ; 1st pixel column position
+static T_rotation_2_pixels_array + #4, #4 ; 2nd pixel row position
+static T_rotation_2_pixels_array + #5, #5 ; 2nd pixel column position
+static T_rotation_2_pixels_array + #6, #3 ; 3th pixel row position
+static T_rotation_2_pixels_array + #7, #4 ; 3th pixel column position
+; rotation 3
+; #
+; $#
+; #
+T_rotation_3_pixels_array : var #8
+static T_rotation_3_pixels_array + #0, #4 ; pivot pixel row position
+static T_rotation_3_pixels_array + #1, #4 ; pivot pixel column position
+static T_rotation_3_pixels_array + #2, #3 ; 1st pixel row position
+static T_rotation_3_pixels_array + #3, #4 ; 1st pixel column position
+static T_rotation_3_pixels_array + #4, #5 ; 2nd pixel row position
+static T_rotation_3_pixels_array + #5, #4 ; 2nd pixel column position
+static T_rotation_3_pixels_array + #6, #4 ; 3th pixel row position
+static T_rotation_3_pixels_array + #7, #5 ; 3th pixel column position
 ; end of T tetromino ...
 ; ... Z tetromino
+; rotation 0
+; #$
+; ##
+Z_rotation_0_pixels_array : var #8
+static Z_rotation_0_pixels_array + #0, #4 ; pivot pixel row position
+static Z_rotation_0_pixels_array + #1, #4 ; pivot pixel column position
+static Z_rotation_0_pixels_array + #2, #4 ; 1st pixel row position
+static Z_rotation_0_pixels_array + #3, #3 ; 1st pixel column position
+static Z_rotation_0_pixels_array + #4, #5 ; 2nd pixel row position
+static Z_rotation_0_pixels_array + #5, #5 ; 2nd pixel column position
+static Z_rotation_0_pixels_array + #6, #5 ; 3th pixel row position
+static Z_rotation_0_pixels_array + #7, #4 ; 3th pixel column position
+; rotation 1
+; #
+; #$
+; #
+Z_rotation_1_pixels_array : var #8
+static Z_rotation_1_pixels_array + #0, #4 ; pivot pixel row position
+static Z_rotation_1_pixels_array + #1, #4 ; pivot pixel column position
+static Z_rotation_1_pixels_array + #2, #3 ; 1st pixel row position
+static Z_rotation_1_pixels_array + #3, #4 ; 1st pixel column position
+static Z_rotation_1_pixels_array + #4, #4 ; 2nd pixel row position
+static Z_rotation_1_pixels_array + #5, #3 ; 2nd pixel column position
+static Z_rotation_1_pixels_array + #6, #5 ; 3th pixel row position
+static Z_rotation_1_pixels_array + #7, #3 ; 3th pixel column position
+; rotation 2
+; ##
+; $#
+Z_rotation_2_pixels_array : var #8
+static Z_rotation_2_pixels_array + #0, #4 ; pivot pixel row position
+static Z_rotation_2_pixels_array + #1, #4 ; pivot pixel column position
+static Z_rotation_2_pixels_array + #2, #4 ; 1st pixel row position
+static Z_rotation_2_pixels_array + #3, #5 ; 1st pixel column position
+static Z_rotation_2_pixels_array + #4, #3 ; 2nd pixel row position
+static Z_rotation_2_pixels_array + #5, #4 ; 2nd pixel column position
+static Z_rotation_2_pixels_array + #6, #3 ; 3th pixel row position
+static Z_rotation_2_pixels_array + #7, #3 ; 3th pixel column position
+; rotation 3
+; #
+; $#
+; #
+Z_rotation_3_pixels_array : var #8
+static Z_rotation_3_pixels_array + #0, #4 ; pivot pixel row position
+static Z_rotation_3_pixels_array + #1, #4 ; pivot pixel column position
+static Z_rotation_3_pixels_array + #2, #5 ; 1st pixel row position
+static Z_rotation_3_pixels_array + #3, #4 ; 1st pixel column position
+static Z_rotation_3_pixels_array + #4, #4 ; 2nd pixel row position
+static Z_rotation_3_pixels_array + #5, #5 ; 2nd pixel column position
+static Z_rotation_3_pixels_array + #6, #3 ; 3th pixel row position
+static Z_rotation_3_pixels_array + #7, #5 ; 3th pixel column position
 ; end of Z tetromino ...
 title : var #1200
   ;Linha 0
@@ -3553,7 +3801,7 @@ push r2
 push r3
 push r4
 push r5
-loadn r4, #2
+loadn r4, #7
 loadn r0, #tetromino_next_prefab_index ; '0' stands for "I tetromino"
 loadi r0, r0
 loadn r1, #2304

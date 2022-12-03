@@ -14,7 +14,7 @@ push r3
 push r4
 push r5
 
-loadn NUMBER_OF_PREFABS, #2
+loadn NUMBER_OF_PREFABS, #7
 
 loadn SELECTED_TETROMINO, #tetromino_next_prefab_index ; '0' stands for "I tetromino"
 loadi SELECTED_TETROMINO, SELECTED_TETROMINO
