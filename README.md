@@ -17,3 +17,5 @@ Funcionamento:
  
 Coisas úteis:
  Como esse projeto foi focado em desenvolver um ambiente bom para criação de projetos em Assembly, foi adotado uma série de padrões, como por exemplo, toda função criada deve possuir um comentário especificando o que ela faz e possíveis argumentos e retornos que ela possui. Além disso, tambem foram criados testes únitários simples para testar códigos específicos sem a nescessidade de mudar o código principal, para isso basta acessar a pasta "tests" e executar o comando make. O comando make ira executar o teste atual, para modificar qual é o teste que é preciso executar no momento, basta entrar dentro do arquivo Makefile dentro de "tests" e modificar o nome do arquivo desejado .asm na primeira variável, "CURRENT_TEST_ASM_FILE".
+
+Link do vídeo de explicação: https://drive.google.com/file/d/1COmUYb05EI8eMb87py0zZo8dQ_C8ZmNp/view?usp=share_link
